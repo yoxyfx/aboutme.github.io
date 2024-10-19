@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Stage Drawer</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0e4d7; /* 따뜻한 배경색 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #6b4f4f; /* 따뜻한 색상 */
+            font-size: 2.5rem;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .drawer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .drawer {
+            width: calc(33.33% - 30px); /* 한 줄에 3개씩 맞도록 서랍 크기 조정 */
+            height: 150px;
+            background-color: #fff3e6;
+            border-radius: 0px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #d1a6a1;
+            animation: rise 1s ease forwards;
+        }
+
+        @keyframes rise {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .drawer-handle {
+            width: 100%;
+            height: 100%;
+            background-color: #ffab91;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.4rem;
+            transition: transform 0.4s ease, background-color 0.4s ease;
+            box-shadow: inset 0 -2px 5px rgba(0, 0, 0, 0.15);
+        }
+
+        .drawer:hover {
+            background-color: #ffd5b2;
+            transform: translateY(-5px);
+        }
+
+        .drawer:hover .drawer-handle {
+            transform: translateX(15px);
+            background-color: #b3754c;
+        }
+
+        .drawer:hover {
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .drawer:nth-child(1) { animation-delay: 0.1s; }
+        .drawer:nth-child(2) { animation-delay: 0.2s; }
+        .drawer:nth-child(3) { animation-delay: 0.3s; }
+        .drawer:nth-child(4) { animation-delay: 0.4s; }
+        .drawer:nth-child(5) { animation-delay: 0.5s; }
+        .drawer:nth-child(6) { animation-delay: 0.6s; }
+        .drawer:nth-child(7) { animation-delay: 0.7s; }
+        .drawer:nth-child(8) { animation-delay: 0.8s; }
+        .drawer:nth-child(9) { animation-delay: 0.9s; }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>OPEN THE DRAWER!</h1>
+    <div class="drawer-container">
+        <!-- 서랍 목록 -->
+        <div class="drawer" data-stage="1">
+            <div class="drawer-handle">1</div>
+        </div>
+        
+        <div class="drawer" data-stage="2">
+            <div class="drawer-handle">2</div>
+        </div>
+        
+        <div class="drawer" data-stage="3">
+            <div class="drawer-handle">3</div>
+        </div>
+
+        <div class="drawer" data-stage="4">
+            <div class="drawer-handle">4</div>
+        </div>
+        
+        <div class="drawer" data-stage="5">
+            <div class="drawer-handle">5</div>
+        </div>
+
+        <div class="drawer" data-stage="6">
+            <div class="drawer-handle">6</div>
+        </div>
+
+        <div class="drawer" data-stage="7">
+            <div class="drawer-handle">7</div>
+        </div>
+
+        <div class="drawer" data-stage="8">
+            <div class="drawer-handle">8</div>
+        </div>
+        
+        <div class="drawer" data-stage="9">
+            <div class="drawer-handle">9</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 서랍 핸들 요소 선택
+    const drawerHandles = document.querySelectorAll('.drawer-handle');
+
+    // 서랍 핸들 클릭 시 페이지로 이동하는 이벤트 처리
+    drawerHandles.forEach(handle => {
+        handle.addEventListener('click', () => {
+            const stage = handle.parentElement.getAttribute('data-stage');
+            window.location.href = `${stage}.html`; // 해당 시기로 이동
+        });
+    });
+</script>
+</body>
+</html>
