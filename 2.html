@@ -10,47 +10,124 @@
         }
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             background-color: #f0f0f0;
+            position: relative; /* relative positioning for absolute elements */
         }
         canvas {
             border: 2px solid black;
             background-color: white;
         }
+        .controls {
+            margin-top: 20px;
+        }
+        button, input {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        #sizeSlider {
+            width: 200px; /* 슬라이더 너비 */
+        }
+        #homeBtn {
+            position: absolute; /* 절대 위치로 설정 */
+            top: 10px; /* 캔버스 상단 10px */
+            left: 10px; /* 왼쪽 10px */
+        }
     </style>
 </head>
 <body>
-<canvas id="canvas" width="800" height="600"></canvas>
+    <button id="homeBtn">홈으로</button> <!-- 홈으로 버튼 -->
+    <canvas id="canvas" width="800" height="600"></canvas>
+    
+    <div class="controls">
+        <button id="colorBtn">색상변경</button> <!-- 색상 변경 버튼 -->
+        <input type="color" id="colorPicker" value="#000000" style="display: none;"> <!-- 색상 선택기 (숨김) -->
+        <button id="penBtn">팬 선택</button>
+        <button id="eraserBtn">지우개 선택</button>
+        <button id="clearBtn">캔버스 초기화</button>
+        <label for="sizeSlider">굵기:</label>
+        <input type="range" id="sizeSlider" min="1" max="20" value="5"> <!-- 팬 굵기 슬라이더 -->
+    </div>
 
-<script>
-    window.onload = () => {
-        const d = document;
-        var canvas = d.getElementById("canvas");
-        var c = canvas.getContext("2d");
+    <script>
+        window.onload = () => {
+            const d = document;
+            var canvas = d.getElementById("canvas");
+            var c = canvas.getContext("2d");
 
-        var meta = {
-            draw: false,
-            size: 5
+            var meta = {
+                draw: false,
+                size: 5, // 기본 팬 굵기
+                color: '#000000', // 기본 색상
+                tool: 'pen' // 기본 도구는 팬
+            };
+
+            // 드로잉 시작
+            canvas.onmousedown = e => {
+                meta.draw = true;
+                c.beginPath(); // 새로운 경로 시작
+                c.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+
+                // 도구에 따라 색상 설정
+                if (meta.tool === 'pen') {
+                    c.strokeStyle = meta.color; // 팬 사용 시 선택된 색상
+                } else if (meta.tool === 'eraser') {
+                    c.strokeStyle = 'white'; // 지우개 사용 시 흰색으로 설정
+                }
+                if (meta.draw) {
+                    canvas.onmousemove = e => {
+                        c.lineWidth = meta.size; // 팬 굵기 설정
+                        c.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+                        c.stroke();
+                    };
+                }
+            };
+
+            // 드로잉 중지
+            canvas.onmouseup = () => {
+                meta.draw = false;
+                canvas.onmousemove = null;
+            };
+
+            // 캔버스 초기화
+            d.getElementById('clearBtn').onclick = () => {
+                c.clearRect(0, 0, canvas.width, canvas.height);
+            };
+
+            // 색상 변경 버튼 클릭 시 색상 선택기 열기
+            d.getElementById('colorBtn').onclick = () => {
+                d.getElementById('colorPicker').click(); // 색상 선택기 클릭
+            };
+
+            // 색상 선택기에서 색상 변경
+            d.getElementById('colorPicker').oninput = e => {
+                meta.color = e.target.value; // 색상 선택 도구에서 새로운 색상 가져오기
+            };
+
+            // 팬 선택
+            d.getElementById('penBtn').onclick = () => {
+                meta.tool = 'pen'; // 팬 선택 시 도구를 'pen'으로 설정
+            };
+
+            // 지우개 선택
+            d.getElementById('eraserBtn').onclick = () => {
+                meta.tool = 'eraser'; // 지우개 선택 시 도구를 'eraser'로 설정
+            };
+
+            // 팬 굵기 변경
+            d.getElementById('sizeSlider').oninput = e => {
+                meta.size = e.target.value; // 슬라이더에서 팬 굵기 가져오기
+            };
+
+            // 홈으로 버튼 클릭 시 index.html로 이동
+            d.getElementById('homeBtn').onclick = () => {
+                window.location.href = 'index.html'; // index.html로 이동
+            };
         };
-
-        canvas.onmousedown = e => {
-            meta.draw = true;
-            c.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-            if (meta.draw) {
-                canvas.onmousemove = e => {
-                    c.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-                    c.stroke();
-                };
-            }
-        };
-
-        canvas.onmouseup = () => {
-            meta.draw = false;
-            canvas.onmousemove = null;
-        };
-    };
-</script>
+    </script>
 </body>
 </html>
