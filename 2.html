@@ -2,10 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sketchbook Canvas</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        canvas {
+            border: 2px solid black;
+            background-color: white;
+        }
+    </style>
 </head>
 <body>
-    
+<canvas id="canvas" width="800" height="600"></canvas>
+
+<script>
+    window.onload = () => {
+        const d = document;
+        var canvas = d.getElementById("canvas");
+        var c = canvas.getContext("2d");
+
+        var meta = {
+            draw: false,
+            size: 5
+        };
+
+        canvas.onmousedown = e => {
+            meta.draw = true;
+            c.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+            if (meta.draw) {
+                canvas.onmousemove = e => {
+                    c.lineTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+                    c.stroke();
+                };
+            }
+        };
+
+        canvas.onmouseup = () => {
+            meta.draw = false;
+            canvas.onmousemove = null;
+        };
+    };
+</script>
 </body>
 </html>
