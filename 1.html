@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        /* 기본 설정 */
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #a2bcd0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            transition: background-color 0.3s ease;
+        }
+
+        .loading {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 15px solid #fff;
+            border-top-color: #ff6347;
+            animation: rotate 1s linear infinite; /* 회전 */
+        }
+
+        .bounce {
+            width: 50px;
+            height: 50px;
+            background-color: #ff6347;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 0;
+            left: 75px;
+            animation: bounce 1s cubic-bezier(.17,.67,.32,.99) infinite alternate; /* 점프  */
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes bounce {
+            0% { bottom: 0; }
+            100% { bottom: 120px; }
+        }
+
+
+        .bgWrap {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .bgWrap > div {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            position: absolute;
+            background: #ff6347;
+            animation: float 1s cubic-bezier(.17,.67,.32,.99) infinite alternate;
+        }
+
+        .bgWrap div:nth-child(1) {
+            bottom: 150px;
+            left: 30%;
+            animation-duration: 1.2s;
+        }
+        .bgWrap div:nth-child(2) {
+            bottom: 250px;
+            left: 40%;
+            animation-duration: 1.5s;
+        }
+        .bgWrap div:nth-child(3) {
+            bottom: 200px;
+            right: 30%;
+            animation-duration: 1.3s;
+        }
+        .bgWrap div:nth-child(4) {
+            bottom: 300px;
+            right: 40%;
+            animation-duration: 1.8s;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100px); }
+        }
+
+        /* 다크모드/라이트모드 전환 토글 */
+        .toggle {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .toggle input[type="radio"] {
+            display: none;
+        }
+
+        .toggle label {
+            cursor: pointer;
+        }
+
+        .toggle span {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 20px;
+            background: #ddd;
+            color: #555;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .toggle input[type="radio"]:checked + span {
+            background: #333;
+            color: white;
+        }
+
+        /* 애니메이션 제어버튼 스타일 */
+        .toggle-animation {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- 로딩 애니메이션 -->
+<div class="loading">
+    <div class="circle"></div> <!-- 회전하는 원 -->
+    <div class="bounce"></div> <!-- 점프하는 공 -->
+</div>
+
+<!-- 배경의 떠 있는 공들 -->
+<div class="bgWrap">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+
+<!-- 다크모드/라이트모드 토글 -->
+<div class="toggle">
+    <label>
+        <input type="radio" name="mode" value="light" checked>
+        <span class="light">Light Mode</span>
+    </label>
+    <label>
+        <input type="radio" name="mode" value="dark">
+        <span class="dark">Dark Mode</span>
+    </label>
+</div>
+
+<!-- 애니메이션 재생/일시정지 버튼 -->
+<button class="toggle-animation">Pause</button>
+
+<script>
+    // 다크모드/라이트모드 전환 기능
+    const radios = document.querySelectorAll('input[type="radio"]');
+    const body = document.body;
+
+    radios.forEach(radio => {
+        radio.addEventListener('click', () => {
+            if (radio.value === 'light') {
+                body.style.background = '#a2bcd0'; // 라이트 모드 색상
+            } else {
+                body.style.background = '#222'; // 다크 모드 색상
+            }
+        });
+    });
+
+    // 애니메이션 제어 기능
+    const toggleBtn = document.querySelector('.toggle-animation');
+    const circle = document.querySelector('.circle');
+    const bounce = document.querySelector('.bounce');
+    const floats = document.querySelectorAll('.bgWrap > div');
+    let isPaused = false; // 애니메이션 재생 상태 추적
+
+    toggleBtn.addEventListener('click', () => {
+        if (isPaused) {
+            // 애니메이션 재생
+            circle.style.animationPlayState = 'running';
+            bounce.style.animationPlayState = 'running';
+            floats.forEach(float => {
+                float.style.animationPlayState = 'running';
+            });
+            toggleBtn.textContent = 'Pause'; // 버튼 텍스트 변경
+        } else {
+            // 애니메이션 일시 정지
+            circle.style.animationPlayState = 'paused';
+            bounce.style.animationPlayState = 'paused';
+            floats.forEach(float => {
+                float.style.animationPlayState = 'paused';
+            });
+            toggleBtn.textContent = 'Play'; // 버튼 텍스트 변경
+        }
+        isPaused = !isPaused; // 상태 반전
+    });
+</script>
+
+</body>
+</html>
+
+</body>
+</html>
