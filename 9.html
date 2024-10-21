@@ -1,11 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>졸업 페이지</title>
+    <style>
+        body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f8ff;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    text-align: center;
+}
+
+.cap {
+    font-size: 100px;
+    position: relative;
+    transition: transform 1s ease-in-out;
+}
+
+.button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+    </style>
 </head>
 <body>
+    <div class="container">
+        <h1>졸업을 축하합니다!</h1>
+        <div class="cap" id="cap">🎓</div>
+        <button id="throwCap">모자 던지기!</button>
+    </div>
+    <script>
+        document.getElementById('throwCap').addEventListener('click', function() {
+    const cap = document.getElementById('cap');
     
+    // 초기 위치 저장
+    cap.style.transform = 'translateY(-100px) rotate(360deg)';
+    
+    // 애니메이션을 위한 타이머
+    setTimeout(() => {
+        cap.style.transform = 'translateY(0) rotate(0deg)';
+    }, 1000); // 1초 후에 원래 위치로 돌아옴
+});
+
+    </script>
 </body>
 </html>
