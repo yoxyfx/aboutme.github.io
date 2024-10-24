@@ -1,239 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Circle Explosion Animation</title>
+  <style>
+    canvas {
+      display: block;
+      background-color: black;
+      margin: 0 auto;
+    }
+  </style>
 </head>
 <body>
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-    <style>
-        /* 기본 설정 */
-        body {
-            margin: 0;
-            overflow: hidden;
-            background: #a2bcd0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            transition: background-color 0.3s ease;
-        }
+  <canvas id="circleCanvas"></canvas>
 
-        .loading {
-            position: relative;
-            width: 200px;
-            height: 200px;
-        }
+  <script>
+    const canvas = document.getElementById('circleCanvas');
+    const ctx = canvas.getContext('2d');
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
 
-        .circle {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 15px solid #fff;
-            border-top-color: #ff6347;
-            animation: rotate 1s linear infinite; /* 회전 */
-        }
+    const numCircles = 20;
+    let circles = [];
+    let exploded = false;
+    let combined = false;
+    let finalCircle = { x: width / 2, y: height / 2, radius: 0, color: 'white' };
 
-        .bounce {
-            width: 50px;
-            height: 50px;
-            background-color: #ff6347;
-            border-radius: 50%;
-            position: absolute;
-            bottom: 0;
-            left: 75px;
-            animation: bounce 1s cubic-bezier(.17,.67,.32,.99) infinite alternate; /* 점프  */
-        }
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
 
-        @keyframes rotate {
-            100% {
-                transform: rotate(360deg);
-            }
-        }
+    function Circle(x, y) {
+      this.x = x;
+      this.y = y;
+      this.radius = random(10, 30);
+      this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+      this.dx = random(-2, 2);
+      this.dy = random(-2, 2);
 
-        @keyframes bounce {
-            0% { bottom: 0; }
-            100% { bottom: 120px; }
-        }
+      this.draw = () => {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+        ctx.closePath();
+      };
 
+      this.update = () => {
+        if (!exploded) {
+          this.x += this.dx;
+          this.y += this.dy;
 
-        .bgWrap {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            overflow: hidden;
-            z-index: -1;
-        }
-
-        .bgWrap > div {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            position: absolute;
-            background: #ff6347;
-            animation: float 1s cubic-bezier(.17,.67,.32,.99) infinite alternate;
-        }
-
-        .bgWrap div:nth-child(1) {
-            bottom: 150px;
-            left: 30%;
-            animation-duration: 1.2s;
-        }
-        .bgWrap div:nth-child(2) {
-            bottom: 250px;
-            left: 40%;
-            animation-duration: 1.5s;
-        }
-        .bgWrap div:nth-child(3) {
-            bottom: 200px;
-            right: 30%;
-            animation-duration: 1.3s;
-        }
-        .bgWrap div:nth-child(4) {
-            bottom: 300px;
-            right: 40%;
-            animation-duration: 1.8s;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-100px); }
-        }
-
-        /* 다크모드/라이트모드 전환 토글 */
-        .toggle {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-        }
-
-        .toggle input[type="radio"] {
-            display: none;
-        }
-
-        .toggle label {
-            cursor: pointer;
-        }
-
-        .toggle span {
-            display: inline-block;
-            padding: 10px 20px;
-            border-radius: 20px;
-            background: #ddd;
-            color: #555;
-            font-size: 16px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .toggle input[type="radio"]:checked + span {
-            background: #333;
-            color: white;
-        }
-
-        /* 애니메이션 제어버튼 스타일 */
-        .toggle-animation {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px 20px;
-            background-color: #333;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-    </style>
-</head>
-<body>
-
-<!-- 로딩 애니메이션 -->
-<div class="loading">
-    <div class="circle"></div> <!-- 회전하는 원 -->
-    <div class="bounce"></div> <!-- 점프하는 공 -->
-</div>
-
-<!-- 배경의 떠 있는 공들 -->
-<div class="bgWrap">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-</div>
-
-<!-- 다크모드/라이트모드 토글 -->
-<div class="toggle">
-    <label>
-        <input type="radio" name="mode" value="light" checked>
-        <span class="light">Light Mode</span>
-    </label>
-    <label>
-        <input type="radio" name="mode" value="dark">
-        <span class="dark">Dark Mode</span>
-    </label>
-</div>
-
-<!-- 애니메이션 재생/일시정지 버튼 -->
-<button class="toggle-animation">Pause</button>
-
-<script>
-    // 다크모드/라이트모드 전환 기능
-    const radios = document.querySelectorAll('input[type="radio"]');
-    const body = document.body;
-
-    radios.forEach(radio => {
-        radio.addEventListener('click', () => {
-            if (radio.value === 'light') {
-                body.style.background = '#a2bcd0'; // 라이트 모드 색상
-            } else {
-                body.style.background = '#222'; // 다크 모드 색상
-            }
-        });
-    });
-
-    // 애니메이션 제어 기능
-    const toggleBtn = document.querySelector('.toggle-animation');
-    const circle = document.querySelector('.circle');
-    const bounce = document.querySelector('.bounce');
-    const floats = document.querySelectorAll('.bgWrap > div');
-    let isPaused = false; // 애니메이션 재생 상태 추적
-
-    toggleBtn.addEventListener('click', () => {
-        if (isPaused) {
-            // 애니메이션 재생
-            circle.style.animationPlayState = 'running';
-            bounce.style.animationPlayState = 'running';
-            floats.forEach(float => {
-                float.style.animationPlayState = 'running';
-            });
-            toggleBtn.textContent = 'Pause'; // 버튼 텍스트 변경
+          // Bounce off walls
+          if (this.x + this.radius > width || this.x - this.radius < 0) {
+            this.dx = -this.dx;
+          }
+          if (this.y + this.radius > height || this.y - this.radius < 0) {
+            this.dy = -this.dy;
+          }
         } else {
-            // 애니메이션 일시 정지
-            circle.style.animationPlayState = 'paused';
-            bounce.style.animationPlayState = 'paused';
-            floats.forEach(float => {
-                float.style.animationPlayState = 'paused';
-            });
-            toggleBtn.textContent = 'Play'; // 버튼 텍스트 변경
+          // Move circles to the center
+          const centerX = width / 2;
+          const centerY = height / 2;
+          this.x += (centerX - this.x) * 0.05;
+          this.y += (centerY - this.y) * 0.05;
+
+          // Gradually shrink the circles
+          if (this.radius > 0.1 && !combined) {
+            this.radius *= 0.95;
+          } else {
+            combined = true;
+          }
         }
-        isPaused = !isPaused; // 상태 반전
-    });
-</script>
+        this.draw();
+      };
+    }
 
-</body>
-</html>
+    // Create circles
+    function createCircles() {
+      circles = [];
+      for (let i = 0; i < numCircles; i++) {
+        const x = random(50, width - 50);
+        const y = random(50, height - 50);
+        circles.push(new Circle(x, y));
+      }
+    }
 
+    function drawFinalCircle() {
+      if (combined) {
+        ctx.beginPath();
+        finalCircle.radius += 10; // 커지는 속도 조정
+        ctx.arc(finalCircle.x, finalCircle.y, finalCircle.radius, 0, Math.PI * 2, false);
+        ctx.fillStyle = finalCircle.color;
+        ctx.fill();
+        ctx.closePath();
+
+        // 최종 원이 1000px 이상이 되면 펑 터지는 효과
+        if (finalCircle.radius > 1000) {
+          reset();  // 애니메이션을 리셋
+        }
+      }
+    }
+
+    function reset() {
+      // 초기화: 원 위치 및 크기 리셋
+      exploded = false;
+      combined = false;
+      finalCircle.radius = 0;
+
+      // 다시 원들 생성
+      createCircles();
+
+      // 3초 후 다시 모이기 시작
+      setTimeout(() => {
+        exploded = true;
+      }, 3000);
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      if (!combined) {
+        circles.forEach(circle => circle.update());
+      } else {
+        drawFinalCircle();
+      }
+      requestAnimationFrame(animate);
+    }
+
+    // 애니메이션 시작
+    createCircles();
+    animate();
+
+    // 3초 후 원들이 모이기 시작
+    setTimeout(() => {
+      exploded = true;
+    }, 3000);
+  </script>
 </body>
 </html>
