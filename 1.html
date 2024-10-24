@@ -5,15 +5,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Circle Explosion Animation</title>
   <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: black; /* Initial dark mode background */
+      color: white; /* Initial text color */
+      transition: background-color 0.5s, color 0.5s; /* Smooth transition */
+    }
+
     canvas {
-      display: block;
       background-color: black;
-      margin: 0 auto;
+    }
+
+    .controls {
+      position: absolute;
+      bottom: 20px;
+      text-align: center;
+    }
+
+    .controls button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .controls button:hover {
+      background-color: #ddd;
+    }
+
+    .toggle-mode {
+      margin-top: 10px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    /* New style for the redirect button */
+    .redirect-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 10px 15px;
+      background-color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-size: 16px;
+    }
+
+    .redirect-button:hover {
+      background-color: #ddd;
     }
   </style>
 </head>
 <body>
   <canvas id="circleCanvas"></canvas>
+  <div class="controls">
+    <button id="toggleButton">Pause</button>
+    <button id="toggleModeButton" class="toggle-mode">Switch to Light Mode</button>
+  </div>
+  
+  <!-- Redirect button -->
+  <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
 
   <script>
     const canvas = document.getElementById('circleCanvas');
@@ -27,7 +92,10 @@
     let circles = [];
     let exploded = false;
     let combined = false;
-    let finalCircle = { x: width / 2, y: height / 2, radius: 0, color: 'white' };
+    let finalCircle = { x: width / 2, y: height / 2, radius: 0, color: 'white' }; // Initial color
+    let animationId;
+    let isPaused = false;
+    let isDarkMode = true; // Track the current mode
 
     function random(min, max) {
       return Math.random() * (max - min) + min;
@@ -92,29 +160,27 @@
     function drawFinalCircle() {
       if (combined) {
         ctx.beginPath();
-        finalCircle.radius += 10; // 커지는 속도 조정
+        finalCircle.radius += 10; // Adjust growth speed
         ctx.arc(finalCircle.x, finalCircle.y, finalCircle.radius, 0, Math.PI * 2, false);
         ctx.fillStyle = finalCircle.color;
         ctx.fill();
         ctx.closePath();
 
-        // 최종 원이 1000px 이상이 되면 펑 터지는 효과
+        // Reset animation if the final circle exceeds a certain radius
         if (finalCircle.radius > 1000) {
-          reset();  // 애니메이션을 리셋
+          reset();
         }
       }
     }
 
     function reset() {
-      // 초기화: 원 위치 및 크기 리셋
       exploded = false;
       combined = false;
       finalCircle.radius = 0;
 
-      // 다시 원들 생성
       createCircles();
 
-      // 3초 후 다시 모이기 시작
+      // Start collapsing after 3 seconds
       setTimeout(() => {
         exploded = true;
       }, 3000);
@@ -127,17 +193,49 @@
       } else {
         drawFinalCircle();
       }
-      requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(animate);
     }
 
-    // 애니메이션 시작
+    // Start the animation
     createCircles();
     animate();
 
-    // 3초 후 원들이 모이기 시작
+    // Start collapsing after 3 seconds
     setTimeout(() => {
       exploded = true;
     }, 3000);
+
+    // Pause and Resume functionality
+    const toggleButton = document.getElementById('toggleButton');
+    toggleButton.addEventListener('click', () => {
+      if (!isPaused) {
+        cancelAnimationFrame(animationId);
+        toggleButton.textContent = 'Resume';
+      } else {
+        animate();
+        toggleButton.textContent = 'Pause';
+      }
+      isPaused = !isPaused;
+    });
+
+    // Dark mode and light mode toggle functionality
+    const toggleModeButton = document.getElementById('toggleModeButton');
+    toggleModeButton.addEventListener('click', () => {
+      isDarkMode = !isDarkMode; // Toggle the mode
+      if (isDarkMode) {
+        document.body.style.backgroundColor = 'black';
+        document.body.style.color = 'white';
+        finalCircle.color = 'yellow'; // Set final circle color for dark mode
+        toggleModeButton.textContent = 'Switch to Light Mode';
+      } else {
+        document.body.style.backgroundColor = 'white';
+        document.body.style.color = 'black';
+        finalCircle.color = 'lightblue'; // Set final circle color for light mode
+        toggleModeButton.textContent = 'Switch to Dark Mode';
+      }
+      // Update canvas background color
+      canvas.style.backgroundColor = isDarkMode ? 'black' : 'white';
+    });
   </script>
 </body>
 </html>
