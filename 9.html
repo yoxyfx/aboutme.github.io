@@ -6,30 +6,32 @@
     <title>졸업 페이지</title>
     <style>
         body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f0f8ff;
-    font-family: Arial, sans-serif;
-}
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
+        }
 
-.container {
-    text-align: center;
-}
+        .container {
+            text-align: center;
+            transform: scale(1.5); /* 내부 요소 확대 */
+            transform-origin: center; /* 확대 중심 설정 */
+        }
 
-.cap {
-    font-size: 100px;
-    position: relative;
-    transition: transform 1s ease-in-out;
-}
+        .cap {
+            font-size: 100px;
+            position: relative;
+            transition: transform 1s ease-in-out;
+        }
 
-.button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}
+        .button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
 
     </style>
 </head>
@@ -41,17 +43,16 @@
     </div>
     <script>
         document.getElementById('throwCap').addEventListener('click', function() {
-    const cap = document.getElementById('cap');
-    
-    // 초기 위치 저장
-    cap.style.transform = 'translateY(-100px) rotate(360deg)';
-    
-    // 애니메이션을 위한 타이머
-    setTimeout(() => {
-        cap.style.transform = 'translateY(0) rotate(0deg)';
-    }, 1000); // 1초 후에 원래 위치로 돌아옴
-});
+            const cap = document.getElementById('cap');
 
+            // 초기 위치 저장
+            cap.style.transform = 'translateY(-100px) rotate(360deg)';
+
+            // 애니메이션을 위한 타이머
+            setTimeout(() => {
+                cap.style.transform = 'translateY(0) rotate(0deg)';
+            }, 1000); // 1초 후에 원래 위치로 돌아옴
+        });
     </script>
 </body>
 </html>
