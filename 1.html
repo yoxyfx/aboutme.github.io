@@ -13,9 +13,9 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
-      background-color: black; /* Initial dark mode background */
-      color: white; /* Initial text color */
-      transition: background-color 0.5s, color 0.5s; /* Smooth transition */
+      background-color: black;
+      color: white;
+      transition: background-color 0.5s, color 0.5s;
     }
 
     canvas {
@@ -51,7 +51,7 @@
       font-size: 16px;
     }
 
-    /* New style for the redirect button */
+   
     .redirect-button {
       position: absolute;
       top: 20px;
@@ -77,7 +77,7 @@
     <button id="toggleModeButton" class="toggle-mode">Switch to Light Mode</button>
   </div>
   
-  <!-- Redirect button -->
+
   <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
 
   <script>
@@ -92,10 +92,10 @@
     let circles = [];
     let exploded = false;
     let combined = false;
-    let finalCircle = { x: width / 2, y: height / 2, radius: 0, color: 'white' }; // Initial color
+    let finalCircle = { x: width / 2, y: height / 2, radius: 0, color: 'white' }; 
     let animationId;
     let isPaused = false;
-    let isDarkMode = true; // Track the current mode
+    let isDarkMode = true; 
 
     function random(min, max) {
       return Math.random() * (max - min) + min;
@@ -122,7 +122,7 @@
           this.x += this.dx;
           this.y += this.dy;
 
-          // Bounce off walls
+       
           if (this.x + this.radius > width || this.x - this.radius < 0) {
             this.dx = -this.dx;
           }
@@ -130,13 +130,13 @@
             this.dy = -this.dy;
           }
         } else {
-          // Move circles to the center
+      
           const centerX = width / 2;
           const centerY = height / 2;
           this.x += (centerX - this.x) * 0.05;
           this.y += (centerY - this.y) * 0.05;
 
-          // Gradually shrink the circles
+         
           if (this.radius > 0.1 && !combined) {
             this.radius *= 0.95;
           } else {
@@ -147,7 +147,7 @@
       };
     }
 
-    // Create circles
+  
     function createCircles() {
       circles = [];
       for (let i = 0; i < numCircles; i++) {
@@ -160,13 +160,12 @@
     function drawFinalCircle() {
       if (combined) {
         ctx.beginPath();
-        finalCircle.radius += 10; // Adjust growth speed
+        finalCircle.radius += 10; 
         ctx.arc(finalCircle.x, finalCircle.y, finalCircle.radius, 0, Math.PI * 2, false);
         ctx.fillStyle = finalCircle.color;
         ctx.fill();
         ctx.closePath();
 
-        // Reset animation if the final circle exceeds a certain radius
         if (finalCircle.radius > 1000) {
           reset();
         }
@@ -180,7 +179,6 @@
 
       createCircles();
 
-      // Start collapsing after 3 seconds
       setTimeout(() => {
         exploded = true;
       }, 3000);
@@ -196,16 +194,16 @@
       animationId = requestAnimationFrame(animate);
     }
 
-    // Start the animation
+
     createCircles();
     animate();
 
-    // Start collapsing after 3 seconds
+
     setTimeout(() => {
       exploded = true;
     }, 3000);
 
-    // Pause and Resume functionality
+
     const toggleButton = document.getElementById('toggleButton');
     toggleButton.addEventListener('click', () => {
       if (!isPaused) {
@@ -218,22 +216,22 @@
       isPaused = !isPaused;
     });
 
-    // Dark mode and light mode toggle functionality
+
     const toggleModeButton = document.getElementById('toggleModeButton');
     toggleModeButton.addEventListener('click', () => {
-      isDarkMode = !isDarkMode; // Toggle the mode
+      isDarkMode = !isDarkMode; 
       if (isDarkMode) {
         document.body.style.backgroundColor = 'black';
         document.body.style.color = 'white';
-        finalCircle.color = 'yellow'; // Set final circle color for dark mode
+        finalCircle.color = 'yellow'; 
         toggleModeButton.textContent = 'Switch to Light Mode';
       } else {
         document.body.style.backgroundColor = 'white';
         document.body.style.color = 'black';
-        finalCircle.color = 'lightblue'; // Set final circle color for light mode
+        finalCircle.color = 'lightblue'; 
         toggleModeButton.textContent = 'Switch to Dark Mode';
       }
-      // Update canvas background color
+  
       canvas.style.backgroundColor = isDarkMode ? 'black' : 'white';
     });
   </script>
