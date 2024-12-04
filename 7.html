@@ -3,9 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Card Flip</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .redirect-button {
+            margin: 100px; 
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .redirect-button:hover {
+            background-color: #91a8ba;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #wrap {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4개의 카드 정렬 */
+            gap: 10px; /* 카드 간 간격 줄이기 */
+            width: 80%; /* 반응형으로 너비 설정 */
+            max-width: 1200px; /* 최대 너비 */
+        }
+
+        li {
+            display: flex;
+            justify-content: center;
+        }
+
+        .flip-wrap {
+            perspective: 1000px;
+        }
+
+        .flip {
+            position: relative;
+            width: 200px; /* 카드 크기 더 크게 설정 */
+            height: 300px;
+            transition: all 0.7s ease-in-out;
+            transform-style: preserve-3d;
+        }
+
+        .flip-wrap:hover .flip {
+            transform: rotateY(180deg);
+        }
+
+        .flip > div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            font-size: 2rem;
+            backface-visibility: hidden;
+        }
+
+        .front {
+            background: aquamarine;
+        }
+
+        .back1 {
+            background: url('img/Asset 10.png') no-repeat center/cover;
+            transform: rotateY(180deg);
+        }
+
+        .back2 {
+            background: url('img/Asset 12.png') no-repeat center/cover;
+            transform: rotateY(180deg);
+        }
+
+        .back3 {
+            background: url('img/Asset 8.png') no-repeat center/cover;
+            transform: rotateY(180deg);
+        }
+    </style>
 </head>
 <body>
+    <!-- 인덱스 버튼 상단 배치 -->
     <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
+
+    <!-- 카드 배치 -->
+    <ul id="wrap">
+        <li class="flip-wrap">
+            <div class="flip">
+                <div class="front">1</div>
+                <div class="back back1"></div>
+            </div>
+        </li>
+        <li class="flip-wrap">
+            <div class="flip">
+                <div class="front">2</div>
+                <div class="back back2"></div>
+            </div>
+        </li>
+        <li class="flip-wrap">
+            <div class="flip">
+                <div class="front">3</div>
+                <div class="back back3"></div>
+            </div>
+        </li>
+        <li class="flip-wrap">
+            <div class="flip">
+                <div class="front">4</div>
+                <div class="back back3"></div>
+            </div>
+        </li>
+    </ul>
 </body>
 </html>
