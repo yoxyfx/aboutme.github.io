@@ -6,34 +6,23 @@
     <style>
         body {
             overflow: hidden;
-            background-image: url('img/bg.png'); /* 이미지 경로 */
-            background-repeat: no-repeat; /* 반복 없음 */
-            background-size: cover; /* 화면에 맞게 확대/축소 */
+            background-image: url('img/bg.png'); 
+            background-repeat: no-repeat;
+            background-size: cover;
         }
         .box {
             position: absolute;
-            top: 600px;
-            left: -415px; /* 초기 위치 */
-            width: 1000px;
-            height: 370px;
-            background: url('img/car.png') no-repeat;
-            background-size: auto;
-            animation: gif 20s infinite steps(200), run 5s linear infinite;
-        }
-        @keyframes gif {
-            100% { background-position: -4150px 0; }
+            top: 750px;
+            left: -200px; 
+            width: 200px; 
+            height: 200px; 
+            background: url('img/car.png') no-repeat; 
+            background-size: contain; 
+            animation: run 10s linear infinite; 
         }
         @keyframes run {
-            0% { left: -415px; }
-            100% { left: 100%; }
-        }
-        .redirect-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
+            0% { left: -200px; } 
+            100% { left: calc(100% + 200px); } 
         }
         .fast-container {
             position: absolute;
@@ -44,11 +33,10 @@
 </head>
 <body>
     <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
-
     <div class="box"></div>
 
     <div class="fast-container">
-        <input type="range" min="2" max="20" step="2" class="fast" value="5">
+        <input type="range" min="2" max="20" step="1" class="fast" value="10">
         <label>빠르기</label>
     </div>
 
@@ -58,16 +46,12 @@
 
         function updateAnimationSpeed() {
             const speed = fast.value;
-            // 애니메이션 지속 시간 업데이트
-            box.style.animation = `gif 20s infinite steps(200), run ${speed}s linear infinite`;
-            console.log(`Speed updated: ${speed}s`);
+           
+            box.style.animation = `run ${speed}s linear infinite`;
         }
 
-        // 슬라이더 변경 시 속도 갱신
         fast.addEventListener('input', updateAnimationSpeed);
-
-        // 초기 속도 설정
-        updateAnimationSpeed();
+        updateAnimationSpeed(); 
     </script>
 </body>
 </html>
