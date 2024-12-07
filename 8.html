@@ -13,10 +13,9 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            background-image: url('img/bg1.png'); 
+            background-color: #ff683b;
             background-repeat: no-repeat;
             background-size: cover;
-     
         }
 
         .container {
@@ -36,22 +35,6 @@
             cursor: grabbing;
         }
 
-        .fixed-card {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 150px;
-            height: 200px;
-            background-color: #007bff;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
         button.redirect-button {
             position: absolute;
             top: 10px;
@@ -60,44 +43,48 @@
             font-size: 16px;
             cursor: pointer;
         }
+
+        img.fixed {
+            position: fixed; /* 고정 이미지를 설정 */
+            top: 150px; /* 페이지 상단 기준 */
+            left: 550px; /* 페이지 좌측 기준 */
+            width: 1200px; /* 원하는 이미지 크기 */
+            height: auto;
+            z-index: 100; /* 다른 요소 위에 표시 */
+        }
+
+        img.draggable {
+            width: 100px; /* 크기를 더 작게 설정 */
+            height: auto;
+            z-index: 200;
+        }
     </style>
 </head>
 <body>
     <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
+    <img src="img/Asset 1.png" class="fixed" alt="Fixed Image">
 
-    <div class="container">
-        <img src="img/Asset 12.png" class="draggable" style="width: 200px; height: auto; top: 50px; left: 50px;">
-        <div class="draggable" style="width: 100px; height: 100px; background: red; top: 100px; left: 200px;"></div>
-        <div class="fixed-card">Fixed Card</div>
-    </div>
+    <!-- Moveable PNG Images -->
+    <img src="img/move1.png" class="draggable" style="top: 120px; left: 1350px;" alt="Moveable Image">
+    <img src="img/move2.png" class="draggable" style="top: 700px; left: 400px;" alt="Moveable Image">
+    <img src="img/move3.png" class="draggable" style="top: 200px; left: 150px;" alt="Moveable Image">
+    <img src="img/move4.png" class="draggable" style="top: 600px; left: 200px;" alt="Moveable Image">
+    <img src="img/move5.png" class="draggable" style="top: 200px; left: 450px;" alt="Moveable Image">
+    <img src="img/move6.png" class="draggable" style="top: 30px; left: 800px;" alt="Moveable Image">
+    <img src="img/move7.png" class="draggable" style="top: 400px; left: 350px;" alt="Moveable Image">
+    <img src="img/move8.png" class="draggable" style="top: 100px; left: 1180px;" alt="Moveable Image">
+    <img src="img/move9.png" class="draggable" style="top: 350px; left: 1500px;" alt="Moveable Image">
 
     <script>
-        // Make elements draggable within the container
+        // Make only draggable images movable within the container
         document.querySelectorAll('.draggable').forEach(element => {
             element.addEventListener('mousedown', (event) => {
-                const container = document.querySelector('.container');
-                const containerRect = container.getBoundingClientRect();
-                const elementRect = element.getBoundingClientRect();
-
-                let shiftX = event.clientX - elementRect.left;
-                let shiftY = event.clientY - elementRect.top;
+                let shiftX = event.clientX - element.getBoundingClientRect().left;
+                let shiftY = event.clientY - element.getBoundingClientRect().top;
 
                 const moveAt = (pageX, pageY) => {
-                    let newX = pageX - shiftX - containerRect.left;
-                    let newY = pageY - shiftY - containerRect.top;
-
-                    // Boundary conditions
-                    if (newX < 0) newX = 0;
-                    if (newY < 0) newY = 0;
-                    if (newX + elementRect.width > containerRect.width) {
-                        newX = containerRect.width - elementRect.width;
-                    }
-                    if (newY + elementRect.height > containerRect.height) {
-                        newY = containerRect.height - elementRect.height;
-                    }
-
-                    element.style.left = newX + 'px';
-                    element.style.top = newY + 'px';
+                    element.style.left = pageX - shiftX + 'px';
+                    element.style.top = pageY - shiftY + 'px';
                 };
 
                 const onMouseMove = (event) => {
@@ -108,7 +95,6 @@
 
                 element.addEventListener('mouseup', () => {
                     document.removeEventListener('mousemove', onMouseMove);
-                    element.onmouseup = null;
                 });
             });
 
