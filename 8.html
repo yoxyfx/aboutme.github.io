@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Draggable with Boundaries</title>
+    <title>Draggable with Reset</title>
     <style>
         body {
             margin: 0;
@@ -35,26 +35,33 @@
             cursor: grabbing;
         }
 
-        button.redirect-button {
+        button.redirect-button, button.reset-button {
             position: absolute;
             top: 10px;
-            left: 10px;
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
         }
 
+        button.redirect-button {
+            left: 10px;
+        }
+
+        button.reset-button {
+            left: 200px;
+        }
+
         img.fixed {
-            position: fixed; /* 고정 이미지를 설정 */
-            top: 150px; /* 페이지 상단 기준 */
-            left: 550px; /* 페이지 좌측 기준 */
-            width: 1200px; /* 원하는 이미지 크기 */
+            position: fixed;
+            top: 150px;
+            left: 550px;
+            width: 1200px;
             height: auto;
-            z-index: 100; /* 다른 요소 위에 표시 */
+            z-index: 100;
         }
 
         img.draggable {
-            width: 100px; /* 크기를 더 작게 설정 */
+            width: 100px;
             height: auto;
             z-index: 200;
         }
@@ -62,6 +69,7 @@
 </head>
 <body>
     <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
+    <button class="reset-button" onclick="resetPositions()">Reset Positions</button>
     <img src="img/Asset 1.png" class="fixed" alt="Fixed Image">
 
     <!-- Moveable PNG Images -->
@@ -76,6 +84,21 @@
     <img src="img/move9.png" class="draggable" style="top: 350px; left: 1500px;" alt="Moveable Image">
 
     <script>
+        // Save initial positions
+        const initialPositions = Array.from(document.querySelectorAll('.draggable')).map(element => ({
+            element,
+            top: element.style.top,
+            left: element.style.left
+        }));
+
+        // Reset positions to their initial state
+        function resetPositions() {
+            initialPositions.forEach(({ element, top, left }) => {
+                element.style.top = top;
+                element.style.left = left;
+            });
+        }
+
         // Make only draggable images movable within the container
         document.querySelectorAll('.draggable').forEach(element => {
             element.addEventListener('mousedown', (event) => {
