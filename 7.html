@@ -18,7 +18,7 @@
             align-items: center;
             justify-content: flex-start;
             min-height: 100vh;
-            background-color: #f4f4f4;
+            background-color: #ffaea3;
         }
 
         .redirect-button {
@@ -62,8 +62,8 @@
 
         .flip {
             position: relative;
-            width: 200px; /* 카드 크기 더 크게 설정 */
-            height: 300px;
+            width: 318px; /* 카드 크기 더 크게 설정 */
+            height: 318px;
             transition: all 0.7s ease-in-out;
             transform-style: preserve-3d;
         }
@@ -84,21 +84,25 @@
         }
 
         .front {
-            background: aquamarine;
+            background: url('img/card.png') no-repeat center/cover;
         }
 
         .back1 {
-            background: url('img/Asset 10.png') no-repeat center/cover;
+            background: url('img/card1.png') no-repeat center/cover;
             transform: rotateY(180deg);
         }
 
         .back2 {
-            background: url('img/Asset 12.png') no-repeat center/cover;
+            background: url('img/card2.png') no-repeat center/cover;
             transform: rotateY(180deg);
         }
 
         .back3 {
-            background: url('img/Asset 8.png') no-repeat center/cover;
+            background: url('img/card3.png') no-repeat center/cover;
+            transform: rotateY(180deg);
+        }
+        .back4 {
+            background: url('img/card4.png') no-repeat center/cover;
             transform: rotateY(180deg);
         }
     </style>
@@ -130,7 +134,7 @@
         <li class="flip-wrap">
             <div class="flip">
                 <div class="front">4</div>
-                <div class="back back3"></div>
+                <div class="back back4"></div>
             </div>
         </li>
     </ul>
