@@ -11,6 +11,8 @@ body{
     background-color: bisque;
 }
         #container {
+            position: relative;
+            top:100px;
             width: 600px;
             height: 600px;
             margin: auto;
@@ -25,12 +27,15 @@ body{
             border-radius: 5px;
             box-shadow: -5px 5px 2px gray;
             position: absolute;
-            top: 5px;
-            left: calc(100vw - 100px);
+            top: -100px;
+           right:-500px;
             display: grid;
             text-align: center;
             align-items: center;
             cursor: pointer;
+        }
+        .piece {
+            width: 200px;
         }
 
     </style>
