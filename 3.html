@@ -2,19 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle Game</title>
     <style>
         * {
             box-sizing: border-box;
         }
 
-        body {
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden; /* 스크롤 방지 */
             background-color: bisque;
         }
 
         #container {
             position: relative;
-            top: 100px;
             width: 750px;
             height: 750px;
             margin: auto;
@@ -24,73 +29,92 @@
 
         .piece {
             width: 250px;
-            cursor: pointer;
+            cursor: grab;
             position: absolute;
         }
 
-        /* 추가적인 스타일 (선택 사항) */
         img {
             width: 250px;
             height: auto;
         }
 
+        .redirect-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px;
+            background-color: #f08080;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
     <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
     <div id="container">
         <!-- 드래그 가능한 이미지들 -->
-        <img src="img/Layer 1.png" class="piece" id="img1" draggable="true">
-        <img src="img/Layer 2.png" class="piece" id="img2" draggable="true">
-        <img src="img/Layer 3.png" class="piece" id="img3" draggable="true">
-        <img src="img/Layer 4.png" class="piece" id="img4" draggable="true">
-        <img src="img/Layer 5.png" class="piece" id="img5" draggable="true">
-        <img src="img/Layer 6.png" class="piece" id="img6" draggable="true">
-        <img src="img/Layer 7.png" class="piece" id="img7" draggable="true">
-        <img src="img/Layer 8.png" class="piece" id="img8" draggable="true">
-        <img src="img/Layer 9.png" class="piece" id="img8" draggable="true">
+        <img src="img/Layer 1.png" class="piece" id="img1" draggable="true" data-x="0" data-y="0">
+        <img src="img/Layer 2.png" class="piece" id="img2" draggable="true" data-x="250" data-y="0">
+        <img src="img/Layer 3.png" class="piece" id="img3" draggable="true" data-x="500" data-y="0">
+        <img src="img/Layer 4.png" class="piece" id="img4" draggable="true" data-x="0" data-y="250">
+        <img src="img/Layer 5.png" class="piece" id="img5" draggable="true" data-x="250" data-y="250">
+        <img src="img/Layer 6.png" class="piece" id="img6" draggable="true" data-x="500" data-y="250">
+        <img src="img/Layer 7.png" class="piece" id="img7" draggable="true" data-x="0" data-y="500">
+        <img src="img/Layer 8.png" class="piece" id="img8" draggable="true" data-x="250" data-y="500">
+        <img src="img/Layer 9.png" class="piece" id="img9" draggable="true" data-x="500" data-y="500">
     </div>
 
     <script>
-        // 드래그 앤 드롭 기능 구현
-        const pieces = document.querySelectorAll('.piece');
+     const pieces = document.querySelectorAll('.piece');
 
-        pieces.forEach(piece => {
-            piece.addEventListener('dragstart', dragStart);
-            piece.addEventListener('dragend', dragEnd);
-        });
+// 드래그 시작 시 처리
+function dragStart(event) {
+    // 현재 드래그 중인 요소의 ID를 저장
+    event.dataTransfer.setData('text/plain', event.target.id);
+}
 
-        function dragStart(e) {
-            this.style.opacity = '0.4';
-            e.dataTransfer.setData('text', this.id);
-        }
+// 드래그가 끝났을 때 처리 (필요하면 추가)
+function dragEnd(event) {
+    console.log('Drag ended');
+}
 
-        function dragEnd() {
-            this.style.opacity = '1';
-        }
+// 컨테이너 위에서 드래그 허용
+function dragOver(event) {
+    event.preventDefault(); // 기본 동작 막기 (드롭 금지 방지)
+}
 
-        // 컨테이너에 드래그된 이미지를 놓을 수 있도록 설정
-        const container = document.getElementById('container');
-        container.addEventListener('dragover', dragOver);
-        container.addEventListener('drop', drop);
+// 드롭 시 처리
+function drop(event) {
+    event.preventDefault();
+    
+    // 드래그 중인 요소의 ID 가져오기
+    const id = event.dataTransfer.getData('text/plain');
+    const draggedElement = document.getElementById(id);
+    
+    // 드롭된 위치의 좌표 계산
+    const containerRect = container.getBoundingClientRect();
+    const offsetX = event.clientX - containerRect.left;
+    const offsetY = event.clientY - containerRect.top;
 
-        function dragOver(e) {
-            e.preventDefault(); // 드롭 가능하도록 허용
-        }
+    // 드래그된 요소의 위치를 업데이트
+    if (offsetX >= 0 && offsetY >= 0 && offsetX <= container.offsetWidth && offsetY <= container.offsetHeight) {
+        draggedElement.style.left = `${offsetX - draggedElement.offsetWidth / 2}px`;
+        draggedElement.style.top = `${offsetY - draggedElement.offsetHeight / 2}px`;
+    }
+}
 
-        function drop(e) {
-            e.preventDefault();
-            const data = e.dataTransfer.getData('text');
-            const draggedPiece = document.getElementById(data);
-            
-            // 드래그된 이미지를 컨테이너 내에서 새로운 위치로 이동
-            const rect = container.getBoundingClientRect();
-            const x = e.clientX - rect.left - draggedPiece.offsetWidth / 2;
-            const y = e.clientY - rect.top - draggedPiece.offsetHeight / 2;
+// 각 이미지에 이벤트 추가
+pieces.forEach(piece => {
+    piece.addEventListener('dragstart', dragStart);
+    piece.addEventListener('dragend', dragEnd);
+});
 
-            draggedPiece.style.left = `${x}px`;
-            draggedPiece.style.top = `${y}px`;
-        }
-    </script>
-</body>
-</html>
+// 컨테이너에 이벤트 추가
+const container = document.getElementById('container');
+container.addEventListener('dragover', dragOver);
+container.addEventListener('drop', drop);
+
+    
+</script>
