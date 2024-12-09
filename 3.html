@@ -7,144 +7,90 @@
         * {
             box-sizing: border-box;
         }
-body{
-    background-color: bisque;
-}
+
+        body {
+            background-color: bisque;
+        }
+
         #container {
             position: relative;
-            top:100px;
-            width: 600px;
-            height: 600px;
+            top: 100px;
+            width: 750px;
+            height: 750px;
             margin: auto;
             border: solid;
             box-shadow: -10px 10px 5px gray;
         }
 
-        #again {
-            width: 75px;
-            height: 75px;
-            border: solid;
-            border-radius: 5px;
-            box-shadow: -5px 5px 2px gray;
-            position: absolute;
-            top: -100px;
-           right:-500px;
-            display: grid;
-            text-align: center;
-            align-items: center;
-            cursor: pointer;
-        }
         .piece {
-            width: 200px;
+            width: 250px;
+            cursor: pointer;
+            position: absolute;
+        }
+
+        /* 추가적인 스타일 (선택 사항) */
+        img {
+            width: 250px;
+            height: auto;
         }
 
     </style>
 </head>
 <body>
     <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
-<div id="container">
+    <div id="container">
+        <!-- 드래그 가능한 이미지들 -->
+        <img src="img/Layer 1.png" class="piece" id="img1" draggable="true">
+        <img src="img/Layer 2.png" class="piece" id="img2" draggable="true">
+        <img src="img/Layer 3.png" class="piece" id="img3" draggable="true">
+        <img src="img/Layer 4.png" class="piece" id="img4" draggable="true">
+        <img src="img/Layer 5.png" class="piece" id="img5" draggable="true">
+        <img src="img/Layer 6.png" class="piece" id="img6" draggable="true">
+        <img src="img/Layer 7.png" class="piece" id="img7" draggable="true">
+        <img src="img/Layer 8.png" class="piece" id="img8" draggable="true">
+        <img src="img/Layer 9.png" class="piece" id="img8" draggable="true">
+    </div>
 
-</div>
+    <script>
+        // 드래그 앤 드롭 기능 구현
+        const pieces = document.querySelectorAll('.piece');
 
-<script>
-    console.clear();
-    const play_puzzle = function () {
-        let window_dim = { width: window.innerWidth, height: window.innerHeight };
-
-        const container = document.querySelector("#container");
-        let again = document.createElement("div");
-        again.innerText = "Play Again";
-        again.id = "again";
-
-        container.appendChild(again);
-
-        //get image sources
-        let puzzle_piece_sources = [
-            "img/Layer 1.png",
-            "img/Layer 2.png",
-            "img/Layer 3.png",
-            "img/Layer 4.png",
-            "img/Layer 5.png",
-            "img/Layer 6.png",
-            "img/Layer 7.png",
-            "img/Layer 8.png",
-            "img/Layer 9.png"
-        ];
-
-        // get random places on screen
-        const get_random_place = function (dims) {
-            let left = Math.floor(Math.random() * (window_dim.width - 2 * dims[0]));
-
-            let top = Math.floor(Math.random() * (window_dim.height - 2 * dims[1]));
-            return [left, top];
-        };
-        for (let each of puzzle_piece_sources) {
-            let new_img = document.createElement("img");
-            new_img.src = each;
-            new_img.classList.add("piece");
-            new_img.style.top =
-                get_random_place([new_img.height, new_img.width])[1] + "px";
-            new_img.style.left =
-                get_random_place([new_img.height, new_img.width])[0] + "px";
-            new_img.style.position = "absolute";
-            container.appendChild(new_img);
-        }
-
-        let image_list = document.querySelectorAll(".piece");
-        //track image clicked
-        let selected = "";
-        //track whether to drag or place
-        let mouse_state = 0;
-
-        //select with mous button down
-        const handle_down = function (e) {
-            e.preventDefault();
-            // move selected image above others
-            for (let each of image_list) {
-                each.style.zIndex = 0;
-            }
-            this.style.zIndex = 10;
-            selected = this;
-            mouse_state = 1;
-        };
-
-        //place when mouse button is let up
-        const handle_up = function (e) {
-            console.log(e.clientX, e.clientY);
-            if (selected) {
-                selected.style.left = e.clientX - selected.width / 2 + "px";
-                selected.style.top = e.clientY - selected.height / 2 + "px";
-                mouse_state = 0;
-                selected = "";
-            }
-        };
-
-        //drag image around as long as it is selected and mouse button is down
-        const handle_move = function (e) {
-            if (mouse_state === 1) {
-                console.log(selected.style.width, selected.style.height);
-                selected.style.left = e.clientX - selected.width / 2 + "px";
-                selected.style.top = e.clientY - selected.height / 2 + "px";
-            }
-        };
-
-        for (let each of image_list) {
-            each.addEventListener("mousedown", handle_down);
-        }
-        window.addEventListener("mousemove", handle_move);
-        window.addEventListener("mouseup", handle_up);
-        window.onresize = function () {
-            window_dim.height = window.innerHeight;
-            window_dim.width = window.innerWidth;
-        };
-
-        document.querySelector("#again").addEventListener("click", () => {
-            container.innerHTML = "";
-            play_puzzle();
+        pieces.forEach(piece => {
+            piece.addEventListener('dragstart', dragStart);
+            piece.addEventListener('dragend', dragEnd);
         });
-    };
-    play_puzzle();
 
-</script>
+        function dragStart(e) {
+            this.style.opacity = '0.4';
+            e.dataTransfer.setData('text', this.id);
+        }
+
+        function dragEnd() {
+            this.style.opacity = '1';
+        }
+
+        // 컨테이너에 드래그된 이미지를 놓을 수 있도록 설정
+        const container = document.getElementById('container');
+        container.addEventListener('dragover', dragOver);
+        container.addEventListener('drop', drop);
+
+        function dragOver(e) {
+            e.preventDefault(); // 드롭 가능하도록 허용
+        }
+
+        function drop(e) {
+            e.preventDefault();
+            const data = e.dataTransfer.getData('text');
+            const draggedPiece = document.getElementById(data);
+            
+            // 드래그된 이미지를 컨테이너 내에서 새로운 위치로 이동
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left - draggedPiece.offsetWidth / 2;
+            const y = e.clientY - rect.top - draggedPiece.offsetHeight / 2;
+
+            draggedPiece.style.left = `${x}px`;
+            draggedPiece.style.top = `${y}px`;
+        }
+    </script>
 </body>
 </html>
