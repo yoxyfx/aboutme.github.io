@@ -17,15 +17,16 @@
             overflow: hidden; /* 스크롤 방지 */
             background-color: bisque;
         }
-
         #container {
-            position: relative;
-            width: 750px;
-            height: 750px;
-            margin: auto;
-            border: solid;
-            box-shadow: -10px 10px 5px gray;
-        }
+    position: absolute; /* 위치를 절대적으로 설정 */
+    top: 10%; /* 위에서부터 20% 만큼 아래로 위치 */
+    left: 50%; /* 화면의 중앙에 위치하도록 설정 */
+    transform: translateX(-50%); /* 수평 중앙 정렬 */
+    width: 750px;
+    height: 750px;
+    border: solid;
+    box-shadow: -10px 10px 5px gray;
+}
 
         .piece {
             width: 250px;
@@ -68,6 +69,32 @@
 
     <script>
 const pieces = document.querySelectorAll('.piece');
+const container = document.getElementById('container');
+
+// 컨테이너 크기를 기준으로 랜덤 위치 계산
+function getRandomPosition(containerWidth, containerHeight, pieceWidth, pieceHeight) {
+    const x = Math.floor(Math.random() * (containerWidth - pieceWidth));
+    const y = Math.floor(Math.random() * (containerHeight - pieceHeight));
+    return { x, y };
+}
+
+// 초기 랜덤 배치
+function setInitialPositions() {
+    const containerWidth = container.offsetWidth;
+    const containerHeight = container.offsetHeight;
+
+    pieces.forEach(piece => {
+        const pieceWidth = piece.offsetWidth;
+        const pieceHeight = piece.offsetHeight;
+
+        // 랜덤 위치 계산
+        const { x, y } = getRandomPosition(containerWidth, containerHeight, pieceWidth, pieceHeight);
+
+        // 이미지 위치 설정
+        piece.style.left = `${x}px`;
+        piece.style.top = `${y}px`;
+    });
+}
 
 // 드래그 시작 시 처리
 function dragStart(event) {
@@ -94,11 +121,11 @@ function dragOver(event) {
 // 드롭 시 처리
 function drop(event) {
     event.preventDefault();
-    
+
     // 드래그 중인 요소의 ID 가져오기
     const id = event.dataTransfer.getData('text/plain');
     const draggedElement = document.getElementById(id);
-    
+
     // 드롭된 위치의 좌표 계산
     const containerRect = container.getBoundingClientRect();
     const offsetX = event.clientX - containerRect.left;
@@ -118,9 +145,11 @@ pieces.forEach(piece => {
 });
 
 // 컨테이너에 이벤트 추가
-const container = document.getElementById('container');
 container.addEventListener('dragover', dragOver);
 container.addEventListener('drop', drop);
+
+// 초기 랜덤 위치 설정
+setInitialPositions();
 
 
     
