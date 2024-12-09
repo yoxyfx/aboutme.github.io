@@ -67,12 +67,18 @@
     </div>
 
     <script>
-     const pieces = document.querySelectorAll('.piece');
+const pieces = document.querySelectorAll('.piece');
 
 // 드래그 시작 시 처리
 function dragStart(event) {
     // 현재 드래그 중인 요소의 ID를 저장
     event.dataTransfer.setData('text/plain', event.target.id);
+
+    // 기본 드래그 미리보기를 제거
+    const emptyCanvas = document.createElement('canvas'); // 빈 캔버스 생성
+    emptyCanvas.width = 0;
+    emptyCanvas.height = 0;
+    event.dataTransfer.setDragImage(emptyCanvas, 0, 0);
 }
 
 // 드래그가 끝났을 때 처리 (필요하면 추가)
@@ -115,6 +121,7 @@ pieces.forEach(piece => {
 const container = document.getElementById('container');
 container.addEventListener('dragover', dragOver);
 container.addEventListener('drop', drop);
+
 
     
 </script>
