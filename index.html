@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>메인페이지</title>
+    <title>빈티지 서랍</title>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
 
     <style>
         * {
@@ -13,8 +14,8 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #C1B5A9; /* 따뜻한 배경색 */
+            font-family: 'Special Elite', cursive; /* 빈티지 타자기 느낌의 글씨체 */
+            background-color: #d3c7b0; /* 따뜻한 빈티지 배경 */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -30,8 +31,9 @@
 
         h1 {
             margin-bottom: 20px;
-            color: #faf6f6; 
-            font-size: 2.5rem;
+            color: #5c4a3e; /* 고풍스러운 색상 */
+            font-size: 3rem;
+            text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3); /* 약간의 그림자 효과 */
             animation: fadeIn 1s;
         }
 
@@ -54,13 +56,13 @@
         .drawer {
             width: calc(33.33% - 30px); 
             height: 150px;
-            background-color: #fff3e6;
+            background: linear-gradient(145deg, #a08361, #c8a582); /* 빈티지한 나무 느낌의 색상 */
             border-radius: 10px;
             position: relative;
             cursor: pointer;
             transition: all 0.4s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border: 1px solid #d1cfa1;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3), 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid #785b42;
             animation: rise 1s ease forwards;
         }
 
@@ -78,60 +80,60 @@
         .drawer-handle {
             width: 100%;
             height: 100%;
-            background-color: #fedbe2;
-            color: white;
+            color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
             transition: transform 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
-            box-shadow: inset 0 -2px 5px rgba(0, 0, 0, 0.15);
+            box-shadow: inset 0 -2px 5px rgba(0, 0, 0, 0.2);
         }
 
         /* 서랍 이동 거리와 색상 차이 강조 */
         .drawer[data-stage="1"]:hover .drawer-handle {
             transform: translateX(20px);
-            background-color: #f88;
+            background-color: #7a5b44;
         }
 
         .drawer[data-stage="2"]:hover .drawer-handle {
             transform: translateX(40px);
-            background-color: #f66;
+            background-color: #6e513d;
         }
 
         .drawer[data-stage="3"]:hover .drawer-handle {
             transform: translateX(10px);
-            background-color: #faa;
+            background-color: #8d6f54;
         }
 
         .drawer[data-stage="4"]:hover .drawer-handle {
             transform: translateX(60px);
-            background-color: #f44;
+            background-color: #644b3a;
         }
 
         .drawer[data-stage="5"]:hover .drawer-handle {
             transform: translateX(25px);
-            background-color: #f99;
+            background-color: #7c6048;
         }
 
         .drawer[data-stage="6"]:hover .drawer-handle {
             transform: translateX(80px);
-            background-color: #f22;
+            background-color: #5e4334;
         }
 
         .drawer[data-stage="7"]:hover .drawer-handle {
             transform: translateX(15px);
-            background-color: #fcc;
+            background-color: #907357;
         }
 
         .drawer[data-stage="8"]:hover .drawer-handle {
             transform: translateX(50px);
-            background-color: #f77;
+            background-color: #735841;
         }
 
         .drawer[data-stage="9"]:hover .drawer-handle {
             transform: translateX(70px);
-            background-color: #f33;
+            background-color: #563c2f;
         }
 
         .drawer:hover {
@@ -151,9 +153,8 @@
 </head>
 <body>
 <div class="container">
-    <h1>OPEN THE DRAWER!</h1>
+    <h1>OPEN THE VINTAGE DRAWER!</h1>
     <div class="drawer-container">
-        <!-- 서랍 목록 -->
         <div class="drawer" data-stage="1">
             <div class="drawer-handle">1</div>
         </div>
