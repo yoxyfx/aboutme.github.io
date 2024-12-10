@@ -28,7 +28,52 @@
             position: absolute;
             top: 100px;
             left: 20px;
+            display: flex;
+            align-items: center;
         }
+        .fast-container input[type="range"] {
+            -webkit-appearance: none; /* For Safari */
+            width: 200px;
+            height: 10px;
+            background: #ddd;
+            border-radius: 5px;
+            outline: none;
+            transition: background 0.3s ease;
+        }
+        
+        /* Custom Thumb */
+        .fast-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #6b4f2b;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .fast-container input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #6b4f2b;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .fast-container input[type="range"]:hover {
+            background: #b5b5b5;
+        }
+
+        .fast-container input[type="range"]:active::-webkit-slider-thumb {
+            background: #8e5a3e;
+        }
+
+        .fast-container input[type="range"]:active::-moz-range-thumb {
+            background: #8e5a3e;
+        }
+
         .redirect-button {
             position: absolute;
             top: 20px;
@@ -70,8 +115,11 @@
 
         function updateAnimationSpeed() {
             const speed = fast.value;
-           
-            box.style.animation = `run ${speed}s linear infinite`;
+
+            // 속도가 반대 방향으로 적용되도록 함
+            const animationSpeed = 22 - speed;  // 2에서 20까지 값을 2에서 22초로 반영
+
+            box.style.animation = `run ${animationSpeed}s linear infinite`;
         }
 
         fast.addEventListener('input', updateAnimationSpeed);
