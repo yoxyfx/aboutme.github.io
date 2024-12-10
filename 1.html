@@ -18,6 +18,12 @@
       transition: background-color 0.5s, color 0.5s;
     }
 
+    .canvas-container {
+      border: 5px solid #6b4f2b; /* 캔버스 외부 테두리 */
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
     canvas {
       background-color: black;
       width: 800px;
@@ -102,7 +108,9 @@
   </style>
 </head>
 <body>
-  <canvas id="circleCanvas"></canvas>
+  <div class="canvas-container">
+    <canvas id="circleCanvas"></canvas>
+  </div>
   <div class="controls">
     <button id="toggleButton">Pause</button>
     <button id="toggleModeButton" class="toggle-mode">Switch to Light Mode</button>
@@ -245,7 +253,7 @@
       if (isDarkMode) {
         document.body.style.backgroundColor = 'rgb(239, 180, 180)';
         document.body.style.color = 'white';
-        finalCircle.color = 'yellow'; 
+        finalCircle.color = 'rgb(239, 180, 180)'; 
         toggleModeButton.textContent = 'Switch to Light Mode';
       } else {
         document.body.style.backgroundColor = 'lightblue';
