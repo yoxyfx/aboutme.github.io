@@ -3,85 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이미지 변경 예제</title>
+    <title>강아지와 집 꾸미기</title>
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffefd5; /* 따뜻한 색상 */
+            font-family: 'Georgia', serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background: #ffffff;
+            border: 10px solid #d4a373; /* 나무색 테두리 */
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 800px;
+        }
+
         #imageContainer {
-            width: 300px;
-            height: 300px;
+            width: 450px;
+            height: 450px;
+            background-color: #fffbe0; /* 따뜻한 배경 */
+            border: 5px solid #d4a373;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px auto;
+            position: relative;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         img {
             width: 100%;
             height: 100%;
+            object-fit: contain;
+            display: none;
         }
-        .redirect-button {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      padding: 12px 25px;
-      background-color: #f5f5f5;
-      border: 2px solid #6b4f2b;
-      border-radius: 50px;
-      cursor: pointer;
-      font-size: 18px;
-      font-family: 'Georgia', serif;
-      color: #6b4f2b;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-    }
 
-    .redirect-button:hover {
-      background-color: #6b4f2b;
-      color: white;
-      transform: scale(1.1);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-    }
+        #img-black {
+            display: block; /* 기본 이미지 */
+        }
+
+        .button-group {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 20px;
+            margin: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            border: 2px solid #6b4f2b;
+            border-radius: 50px;
+            background-color: #ffffff;
+            color: #6b4f2b;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #6b4f2b;
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        .redirect-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background-color: #f5f5f5;
+            border: 2px solid #6b4f2b;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .redirect-button:hover {
+            background-color: #6b4f2b;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 강아지 집 배경 느낌 */
+        .dog-house {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 120px;
+            background: #d4a373;
+            clip-path: polygon(50% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%);
+            z-index: -1;
+        }
     </style>
 </head>
 <body>
-    <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
-    <div>
-      <button id="btn-black">검정</button>
-      <button id="btn-brown">갈색</button>
-      <button id="btn-white">흰색</button>
-  </div>
-   <img src="img/갈색.png">
-   <img src="img/검은색.png">
-   
-   <img src="img/흰색.png">
-   
+    <div class="container">
+        <div class="dog-house"></div>
+        <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
 
- 
- 
- 
- 
-      <script>
-    
-  // 버튼과 SVG 그룹 요소를 가져옵니다.
-const btnBlack = document.getElementById('btn-black');
-const btnBrown = document.getElementById('btn-brown');
-const btnWhite = document.getElementById('btn-white');
-const groups = document.querySelectorAll('svg g');
+        <div id="imageContainer">
+            <img id="img-black" src="img/검정.png" alt="검정 강아지">
+            <img id="img-brown" src="img/갈색.png" alt="갈색 강아지">
+            <img id="img-white" src="img/흰색.png" alt="흰색 강아지">
+        </div>
 
-// 공통 함수: 특정 그룹만 보이게 설정
-function showGroup(targetId) {
-    groups.forEach(group => {
-        if (group.id === targetId) {
-            group.style.opacity = '1'; // 해당 그룹 보이기
-        } else {
-            group.style.opacity = '0'; // 나머지 그룹 숨기기
+        <div class="button-group">
+            <button id="btn-black">검정</button>
+            <button id="btn-brown">갈색</button>
+            <button id="btn-white">흰색</button>
+        </div>
+    </div>
+
+    <script>
+        // 버튼과 이미지 요소를 가져옵니다.
+        const btnBlack = document.getElementById('btn-black');
+        const btnBrown = document.getElementById('btn-brown');
+        const btnWhite = document.getElementById('btn-white');
+        const imgBlack = document.getElementById('img-black');
+        const imgBrown = document.getElementById('img-brown');
+        const imgWhite = document.getElementById('img-white');
+
+        // 공통 함수: 특정 이미지만 보이게 설정
+        function showImage(targetImage) {
+            imgBlack.style.display = 'none';
+            imgBrown.style.display = 'none';
+            imgWhite.style.display = 'none';
+            targetImage.style.display = 'block';
         }
-    });
-}
 
-// 버튼 클릭 이벤트
-btnBlack.addEventListener('click', () => showGroup('_검정'));
-btnBrown.addEventListener('click', () => showGroup('_갈색'));
-btnWhite.addEventListener('click', () => showGroup('_흰색'));
-
-
-      </script>
+        // 버튼 클릭 이벤트
+        btnBlack.addEventListener('click', () => showImage(imgBlack));
+        btnBrown.addEventListener('click', () => showImage(imgBrown));
+        btnWhite.addEventListener('click', () => showImage(imgWhite));
+    </script>
 </body>
 </html>
