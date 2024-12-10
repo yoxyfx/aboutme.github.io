@@ -18,30 +18,35 @@
             align-items: center;
             justify-content: flex-start;
             min-height: 100vh;
-            background-color: #f9f1e5; /* 빈티지 느낌을 주는 부드러운 크림색 배경 */
-            color: #4e4e4e; /* 어두운 회색 글자색 */
-            text-align: center; /* 텍스트 가운데 정렬 */
+            background-color: #f9f1e5; 
+            background-image: url('https://www.transparenttextures.com/patterns/old-map.png');
+            color: #4e4e4e; 
+            text-align: center; 
         }
 
-        .redirect-button {
+         .redirect-button {
             position: absolute;
             top: 20px;
             left: 20px;
             padding: 12px 25px;
-            font-size: 1.2rem;
-            background-color: #f8cfa5; /* 부드러운 빈티지 오렌지색 */
-            color: white;
-            border: 2px solid #d7a47e;
-            border-radius: 8px;
+            background-color: #f5f5f5;
+            border: 2px solid #6b4f2b;
+            border-radius: 50px;
             cursor: pointer;
+            font-size: 18px;
+            font-family: 'Georgia', serif;
+            color: #6b4f2b;
             text-transform: uppercase;
-            font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
         }
 
         .redirect-button:hover {
-            background-color: #e2b28b; /* 호버시 색상 변화 */
-            transform: scale(1.05); /* 호버시 버튼 확대 효과 */
+            background-color: #6b4f2b;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
         ul {
@@ -50,11 +55,11 @@
             margin: 0;
             display: flex;
             flex-wrap: wrap;
-            justify-content: center; /* 카드들을 가운데 정렬 */
-            gap: 20px; /* 카드 간 간격 */
+            justify-content: center; 
+            gap: 20px; 
             width: 80%;
             max-width: 1500px;
-            margin-top: 100px;
+            margin-top: 300px;
         }
 
         li {
@@ -68,11 +73,11 @@
 
         .flip {
             position: relative;
-            width: 318px; /* 카드 크기 */
+            width: 318px; 
             height: 318px;
             transition: all 0.7s ease-in-out;
             transform-style: preserve-3d;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* 빈티지 스타일의 깊이감 */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); 
         }
 
         .flip-wrap:hover .flip {
@@ -92,7 +97,7 @@
 
         .front {
             background: url('img/card.png') no-repeat center/cover;
-            background-color: #f2c2a9; /* 빈티지 느낌의 따뜻한 색상 */
+            background-color: #f2c2a9; 
             color: #ffffff;
             font-size: 2rem;
             font-weight: bold;
@@ -102,33 +107,33 @@
         .back1 {
             background: url('img/card1.png') no-repeat center/cover;
             transform: rotateY(180deg);
-            background-color: #d7b1a1; /* 빈티지한 따뜻한 색상 */
+            background-color: #d7b1a1; 
         }
 
         .back2 {
             background: url('img/card2.png') no-repeat center/cover;
             transform: rotateY(180deg);
-            background-color: #bfa68f; /* 부드러운 연한 갈색 */
+            background-color: #bfa68f; 
         }
 
         .back3 {
             background: url('img/card3.png') no-repeat center/cover;
             transform: rotateY(180deg);
-            background-color: #e1bfa1; /* 부드러운 크림색 */
+            background-color: #e1bfa1; 
         }
 
         .back4 {
             background: url('img/card4.png') no-repeat center/cover;
             transform: rotateY(180deg);
-            background-color: #d5a27f; /* 빈티지 느낌의 따뜻한 색상 */
+            background-color: #d5a27f; 
         }
+
     </style>
 </head>
+
 <body>
-    <!-- 인덱스 버튼 왼쪽 상단 배치 -->
     <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
 
-    <!-- 카드 배치 -->
     <ul id="wrap">
         <li class="flip-wrap">
             <div class="flip">
@@ -155,5 +160,6 @@
             </div>
         </li>
     </ul>
+
 </body>
 </html>
