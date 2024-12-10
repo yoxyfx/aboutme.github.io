@@ -11,35 +11,44 @@
             align-items: center;
             height: 100vh;
             background-color: #f9f9f9;
-            font-family: 'Roboto', sans-serif; /* 모던한 느낌의 폰트 */
+            font-family: 'Roboto', sans-serif;
             background: url('img/bg2.png') no-repeat center center; 
             background-size: cover;
-        }
-
-        .container {
+            flex-direction: column; /* 수직 방향으로 정렬 */
             text-align: center;
-            background-color: rgba(255, 255, 255, 0.85); /* 약간 투명한 배경 */
-            padding: 50px 60px;
-            border-radius: 15px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-            width: 70%;
-            max-width: 600px;
         }
 
         h1 {
-            font-size: 40px;
-            color: #6c4f3d; /* 빈티지하면서도 세련된 색상 */
+            font-family: 'Special Elite', cursive; 
+            font-size: 80px;
+            color: #6c4f3d;
             font-weight: 600;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             letter-spacing: 1px;
+            position: absolute; /* 상단에 고정 */
+            top: 100px; /* 상단에서 조금 떨어지게 설정 */
+            width: 100%;
+            text-align: center;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 150px; /* 버튼들이 더 아래로 이동하도록 설정 */
         }
 
         .cap {
-            font-size: 100px;
+            font-size: 200px;
             position: relative;
             transition: transform 1s ease-in-out;
+            margin-bottom: 150px;
         }
-        .redirect-button, .reset-button {
+
+        .redirect-button {
             position: absolute;
             top: 20px;
             left: 20px;
@@ -56,8 +65,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
         }
-        
-       
+
         .redirect-button:hover {
             background-color: #6b4f2b;
             color: white;
@@ -65,7 +73,7 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
-       #throwCap {
+        #throwCap {
             padding: 12px 25px;
             font-size: 16px;
             cursor: pointer;
@@ -81,28 +89,45 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-         #throwCap:hover {
+        #throwCap:hover {
             background-color: #f1e3d8;
             color: #6c4f3d;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
 
-      #throwCap:focus {
+        #throwCap:focus {
             outline: none;
         }
 
+        /* 깜박이는 텍스트 스타일 */
+        .blink-text {
+            font-size: 18px;
+            color: #6c4f3d;
+            margin-top: 20px;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
+    <button class="redirect-button button" onclick="window.location.href='index.html'">Go to Index</button>
+    <h1>CONGRATS!</h1>
     <div class="container">
-        <button class="redirect-button button" onclick="window.location.href='index.html'">Go to Index</button>
-        <h1>졸업을 축하합니다!</h1>
         <div class="cap" id="cap">🎓</div>
         <button id="throwCap" class="button">모자 던지기!</button>
+
+        <!-- 스페이스바를 누르라는 텍스트 추가 -->
+        <div class="blink-text" id="blink-text">스페이스바를 누르세요</div>
     </div>
 
     <script>
-        document.getElementById('throwCap').addEventListener('click', function() {
+        // 모자 던지기 동작 함수
+        function throwCap() {
             const cap = document.getElementById('cap');
 
             cap.style.transform = 'translateY(-100px) rotate(360deg)';
@@ -110,6 +135,16 @@
             setTimeout(() => {
                 cap.style.transform = 'translateY(0) rotate(0deg)';
             }, 1000);
+        }
+
+        // 버튼 클릭 시 모자 던지기
+        document.getElementById('throwCap').addEventListener('click', throwCap);
+
+        // 스페이스바 누를 때 모자 던지기
+        document.addEventListener('keydown', function(event) {
+            if (event.key === ' ' || event.keyCode === 32) { // 스페이스바 확인
+                throwCap();
+            }
         });
     </script>
 </body>
