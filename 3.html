@@ -87,10 +87,8 @@
         const restartButton = document.getElementById('restart');
 
         function setInitialPositions() {
-            // 고정된 이미지 제외한 나머지 이미지들을 사용자 지정 위치로 설정
             pieces.forEach(piece => {
-                if (piece.id !== 'img6') { // 고정된 이미지 제외
-                    // 각 이미지의 위치를 사용자 지정
+                if (piece.id !== 'img6') {
                     if (piece.id === 'img1') {
                         piece.style.left = '-300px';
                         piece.style.top = '50px';
@@ -120,36 +118,30 @@
             });
         }
 
-        function isColliding(rect1, rect2) {
-            return !(
-                rect1.right <= rect2.left ||
-                rect1.left >= rect2.right ||
-                rect1.bottom <= rect2.top ||
-                rect1.top >= rect2.bottom
-            );
+        function getDistance(piece, target) {
+            const pieceRect = piece.getBoundingClientRect();
+            const targetRect = target.getBoundingClientRect();
+
+            const centerPieceX = pieceRect.left + pieceRect.width / 2;
+            const centerPieceY = pieceRect.top + pieceRect.height / 2;
+
+            const centerTargetX = targetRect.left + targetRect.width / 2;
+            const centerTargetY = targetRect.top + targetRect.height / 2;
+
+            const deltaX = centerPieceX - centerTargetX;
+            const deltaY = centerPieceY - centerTargetY;
+
+            return { deltaX, deltaY, distance: Math.sqrt(deltaX * deltaX + deltaY * deltaY) };
         }
 
         function handleCollision(piece) {
-            const fixedRect = fixedPiece.getBoundingClientRect();
-            const pieceRect = piece.getBoundingClientRect();
+            const { deltaX, deltaY, distance } = getDistance(piece, fixedPiece);
 
-            if (isColliding(fixedRect, pieceRect)) {
-                const overlapX = Math.min(fixedRect.right - pieceRect.left, pieceRect.right - fixedRect.left);
-                const overlapY = Math.min(fixedRect.bottom - pieceRect.top, pieceRect.bottom - fixedRect.top);
-
-                if (overlapX < overlapY) {
-                    // Horizontal collision
-                    piece.style.left =
-                        fixedRect.right > pieceRect.left
-                            ? `${parseFloat(piece.style.left) + overlapX}px`
-                            : `${parseFloat(piece.style.left) - overlapX}px`;
-                } else {
-                    // Vertical collision
-                    piece.style.top =
-                        fixedRect.bottom > pieceRect.top
-                            ? `${parseFloat(piece.style.top) + overlapY}px`
-                            : `${parseFloat(piece.style.top) - overlapY}px`;
-                }
+            // 자석처럼 붙을 조건 (충돌 범위 내로 가까워졌을 때)
+            if (distance < 200) {
+                const fixedRect = fixedPiece.getBoundingClientRect();
+                piece.style.left = `${fixedRect.left}px`;
+                piece.style.top = `${fixedRect.top}px`;
             }
         }
 
@@ -171,8 +163,30 @@
             if (offsetX >= 0 && offsetY >= 0 && offsetX <= container.offsetWidth && offsetY <= container.offsetHeight) {
                 draggedElement.style.left = `${offsetX - draggedElement.offsetWidth / 2}px`;
                 draggedElement.style.top = `${offsetY - draggedElement.offsetHeight / 2}px`;
-                handleCollision(draggedElement);
+
+                // 맞닿은 면끼리 스냅되도록 처리
+                handleSnap(draggedElement);
             }
+        }
+
+        function handleSnap(draggedElement) {
+            pieces.forEach(piece => {
+                if (piece !== draggedElement) {
+                    const { deltaX, deltaY, distance } = getDistance(draggedElement, piece);
+
+                    const margin = 20; // 가까운 범위 정의
+
+                    // X축, Y축 기준으로 맞닿은 면이 있으면 스냅
+                    if (Math.abs(deltaX) < margin && Math.abs(deltaY) < margin) {
+                        if (Math.abs(deltaX) < margin) {
+                            draggedElement.style.left = `${piece.getBoundingClientRect().left}px`;
+                        }
+                        if (Math.abs(deltaY) < margin) {
+                            draggedElement.style.top = `${piece.getBoundingClientRect().top}px`;
+                        }
+                    }
+                }
+            });
         }
 
         function dragOver(event) {

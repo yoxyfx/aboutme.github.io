@@ -14,19 +14,20 @@
             padding: 0;
             width: 100%;
             height: 100vh;
-            overflow: hidden; /* 스크롤 방지 */
+            overflow: hidden;
             background-color: bisque;
         }
+
         #container {
-    position: absolute; /* 위치를 절대적으로 설정 */
-    top: 10%; /* 위에서부터 20% 만큼 아래로 위치 */
-    left: 50%; /* 화면의 중앙에 위치하도록 설정 */
-    transform: translateX(-50%); /* 수평 중앙 정렬 */
-    width: 750px;
-    height: 750px;
-    border: solid;
-    box-shadow: -10px 10px 5px gray;
-}
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 750px;
+            height: 750px;
+            border: solid;
+            box-shadow: -10px 10px 5px gray;
+        }
 
         .piece {
             width: 250px;
@@ -39,7 +40,14 @@
             height: auto;
         }
 
-        .redirect-button {
+        /* Layer 6 고정 스타일 */
+        #img6 {
+            position: absolute;
+            left: 250px;
+            top: 250px;
+        }
+
+        .redirect-button, .restart-button {
             position: absolute;
             top: 10px;
             left: 10px;
@@ -50,119 +58,151 @@
             cursor: pointer;
             font-size: 16px;
         }
+
+        .restart-button {
+            left: 110px; /* Restart 버튼은 오른쪽에 위치 */
+            background-color: #4CAF50; /* 다른 색상으로 구분 */
+        }
     </style>
 </head>
 <body>
     <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
+    <button class="restart-button" id="restart">Restart</button>
     <div id="container">
-        <!-- 드래그 가능한 이미지들 -->
-        <img src="img/Layer 1.png" class="piece" id="img1" draggable="true" data-x="0" data-y="0">
-        <img src="img/Layer 2.png" class="piece" id="img2" draggable="true" data-x="250" data-y="0">
-        <img src="img/Layer 3.png" class="piece" id="img3" draggable="true" data-x="500" data-y="0">
-        <img src="img/Layer 4.png" class="piece" id="img4" draggable="true" data-x="0" data-y="250">
-        <img src="img/Layer 5.png" class="piece" id="img5" draggable="true" data-x="250" data-y="250">
-        <img src="img/Layer 6.png" class="piece" id="img6" draggable="true" data-x="500" data-y="250">
-        <img src="img/Layer 7.png" class="piece" id="img7" draggable="true" data-x="0" data-y="500">
-        <img src="img/Layer 8.png" class="piece" id="img8" draggable="true" data-x="250" data-y="500">
-        <img src="img/Layer 9.png" class="piece" id="img9" draggable="true" data-x="500" data-y="500">
+        <img src="img/Layer 1.png" class="piece" id="img1" draggable="true">
+        <img src="img/Layer 2.png" class="piece" id="img2" draggable="true">
+        <img src="img/Layer 3.png" class="piece" id="img3" draggable="true">
+        <img src="img/Layer 4.png" class="piece" id="img4" draggable="true">
+        <img src="img/Layer 5.png" class="piece" id="img5" draggable="true">
+        <img src="img/Layer 6.png" class="piece" id="img6">
+        <img src="img/Layer 7.png" class="piece" id="img7" draggable="true">
+        <img src="img/Layer 8.png" class="piece" id="img8" draggable="true">
+        <img src="img/Layer 9.png" class="piece" id="img9" draggable="true">
     </div>
 
     <script>
-const pieces = document.querySelectorAll('.piece');
-const container = document.getElementById('container');
+        const pieces = document.querySelectorAll('.piece:not(#img6)');
+        const fixedPiece = document.getElementById('img6');
+        const container = document.getElementById('container');
+        const restartButton = document.getElementById('restart');
 
-// 컨테이너 크기를 기준으로 랜덤 위치 계산
-function getRandomPosition(containerWidth, containerHeight, pieceWidth, pieceHeight, existingPositions) {
-    let x, y, overlap;
+        function setInitialPositions() {
+            pieces.forEach(piece => {
+                if (piece.id !== 'img6') {
+                    if (piece.id === 'img1') {
+                        piece.style.left = '-300px';
+                        piece.style.top = '50px';
+                    } else if (piece.id === 'img2') {
+                        piece.style.left = '-80px';
+                        piece.style.top = '250px';
+                    } else if (piece.id === 'img3') {
+                        piece.style.left = '0px';
+                        piece.style.top = '400px';
+                    } else if (piece.id === 'img4') {
+                        piece.style.left = '400px';
+                        piece.style.top = '50px';
+                    } else if (piece.id === 'img5') {
+                        piece.style.left = '500px';
+                        piece.style.top = '600px';
+                    } else if (piece.id === 'img7') {
+                        piece.style.left = '600px';
+                        piece.style.top = '300px';
+                    } else if (piece.id === 'img8') {
+                        piece.style.left = '700px';
+                        piece.style.top = '350px';
+                    } else if (piece.id === 'img9') {
+                        piece.style.left = '800px';
+                        piece.style.top = '400px';
+                    }
+                }
+            });
+        }
 
-    // 랜덤 위치가 기존 이미지들과 겹치지 않도록 반복
-    do {
-        overlap = false;
-        x = Math.floor(Math.random() * (containerWidth - pieceWidth));
-        y = Math.floor(Math.random() * (containerHeight - pieceHeight));
+        function getDistance(piece, target) {
+            const pieceRect = piece.getBoundingClientRect();
+            const targetRect = target.getBoundingClientRect();
 
-        // 다른 이미지들과 겹치는지 확인
-        existingPositions.forEach(position => {
-            const distance = Math.sqrt(Math.pow(x - position.x, 2) + Math.pow(y - position.y, 2));
-            if (distance < pieceWidth) {
-                overlap = true; // 겹칠 경우 다시 시도
+            const centerPieceX = pieceRect.left + pieceRect.width / 2;
+            const centerPieceY = pieceRect.top + pieceRect.height / 2;
+
+            const centerTargetX = targetRect.left + targetRect.width / 2;
+            const centerTargetY = targetRect.top + targetRect.height / 2;
+
+            const deltaX = centerPieceX - centerTargetX;
+            const deltaY = centerPieceY - centerTargetY;
+
+            return { deltaX, deltaY, distance: Math.sqrt(deltaX * deltaX + deltaY * deltaY) };
+        }
+
+        function handleCollision(piece) {
+            const { deltaX, deltaY, distance } = getDistance(piece, fixedPiece);
+
+            // 자석처럼 붙을 조건 (충돌 범위 내로 가까워졌을 때)
+            if (distance < 200) {
+                const fixedRect = fixedPiece.getBoundingClientRect();
+                piece.style.left = `${fixedRect.left}px`;
+                piece.style.top = `${fixedRect.top}px`;
             }
+        }
+
+        function dragStart(event) {
+            const draggedElement = event.target;
+            event.dataTransfer.setDragImage(draggedElement, draggedElement.offsetWidth / 2, draggedElement.offsetHeight / 2);
+            event.dataTransfer.setData('text/plain', draggedElement.id);
+        }
+
+        function drop(event) {
+            event.preventDefault();
+            const id = event.dataTransfer.getData('text/plain');
+            const draggedElement = document.getElementById(id);
+
+            const containerRect = container.getBoundingClientRect();
+            const offsetX = event.clientX - containerRect.left;
+            const offsetY = event.clientY - containerRect.top;
+
+            if (offsetX >= 0 && offsetY >= 0 && offsetX <= container.offsetWidth && offsetY <= container.offsetHeight) {
+                draggedElement.style.left = `${offsetX - draggedElement.offsetWidth / 2}px`;
+                draggedElement.style.top = `${offsetY - draggedElement.offsetHeight / 2}px`;
+
+                // 맞닿은 면끼리 스냅되도록 처리
+                handleSnap(draggedElement);
+            }
+        }
+
+        function handleSnap(draggedElement) {
+            pieces.forEach(piece => {
+                if (piece !== draggedElement) {
+                    const { deltaX, deltaY, distance } = getDistance(draggedElement, piece);
+
+                    const margin = 20; // 가까운 범위 정의
+
+                    // X축, Y축 기준으로 맞닿은 면이 있으면 스냅
+                    if (Math.abs(deltaX) < margin && Math.abs(deltaY) < margin) {
+                        if (Math.abs(deltaX) < margin) {
+                            draggedElement.style.left = `${piece.getBoundingClientRect().left}px`;
+                        }
+                        if (Math.abs(deltaY) < margin) {
+                            draggedElement.style.top = `${piece.getBoundingClientRect().top}px`;
+                        }
+                    }
+                }
+            });
+        }
+
+        function dragOver(event) {
+            event.preventDefault();
+        }
+
+        restartButton.addEventListener('click', setInitialPositions);
+
+        pieces.forEach(piece => {
+            piece.addEventListener('dragstart', dragStart);
         });
-    } while (overlap);
 
-    // 새 위치를 반환
-    return { x, y };
-}
+        container.addEventListener('dragover', dragOver);
+        container.addEventListener('drop', drop);
 
-// 초기 랜덤 배치
-function setInitialPositions() {
-    const containerWidth = container.offsetWidth;
-    const containerHeight = container.offsetHeight;
-    let existingPositions = [];
-
-    pieces.forEach(piece => {
-        const pieceWidth = piece.offsetWidth;
-        const pieceHeight = piece.offsetHeight;
-
-        // 기존 위치들과 겹치지 않도록 새로운 위치 계산
-        const { x, y } = getRandomPosition(containerWidth, containerHeight, pieceWidth, pieceHeight, existingPositions);
-
-        // 이미지 위치 설정
-        piece.style.left = `${x}px`;
-        piece.style.top = `${y}px`;
-
-        // 해당 이미지의 위치를 기존 위치 목록에 추가
-        existingPositions.push({ x, y });
-    });
-}
-
-// 드래그 시작 시 처리
-function dragStart(event) {
-    event.dataTransfer.setData('text/plain', event.target.id);
-    const emptyCanvas = document.createElement('canvas');
-    emptyCanvas.width = 0;
-    emptyCanvas.height = 0;
-    event.dataTransfer.setDragImage(emptyCanvas, 0, 0);
-}
-
-// 드래그가 끝났을 때 처리
-function dragEnd(event) {
-    console.log('Drag ended');
-}
-
-// 컨테이너 위에서 드래그 허용
-function dragOver(event) {
-    event.preventDefault();
-}
-
-// 드롭 시 처리
-function drop(event) {
-    event.preventDefault();
-
-    const id = event.dataTransfer.getData('text/plain');
-    const draggedElement = document.getElementById(id);
-
-    const containerRect = container.getBoundingClientRect();
-    const offsetX = event.clientX - containerRect.left;
-    const offsetY = event.clientY - containerRect.top;
-
-    if (offsetX >= 0 && offsetY >= 0 && offsetX <= container.offsetWidth && offsetY <= container.offsetHeight) {
-        draggedElement.style.left = `${offsetX - draggedElement.offsetWidth / 2}px`;
-        draggedElement.style.top = `${offsetY - draggedElement.offsetHeight / 2}px`;
-    }
-}
-
-pieces.forEach(piece => {
-    piece.addEventListener('dragstart', dragStart);
-    piece.addEventListener('dragend', dragEnd);
-});
-
-container.addEventListener('dragover', dragOver);
-container.addEventListener('drop', drop);
-
-// 초기 랜덤 위치 설정
-setInitialPositions();
-
-
-    
-</script>
+        setInitialPositions();
+    </script>
+</body>
+</html>
