@@ -29,12 +29,25 @@
             padding: 20px;
         }
 
+        /* 글자가 왼쪽에서 오른쪽으로 움직이는 애니메이션 */
+        @keyframes moveText {
+            0% {
+                transform: translateX(-100%);
+            }
+            50% {
+                transform: translateX(50%);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
         h1 {
             margin-bottom: 20px;
             color: #4f3b2f; /* 따뜻한 다크 브라운 색상 */
             font-size: 3rem;
             text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 1s;
+            animation: fadeIn 1s, moveText 2s ease-in-out;
         }
 
         @keyframes fadeIn {
