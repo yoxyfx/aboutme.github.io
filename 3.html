@@ -52,36 +52,71 @@
             top: 250px;
         }
 
-        /* 버튼 스타일 */
-        .redirect-button, .restart-button {
-            padding: 10px;
-            background-color: #f08080;
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 5px; /* 둥근 모서리 */
-            font-family: 'Georgia', serif; /* 빈티지 느낌 */
-            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2); /* 버튼 그림자 */
-            transition: all 0.3s ease; /* 버튼 클릭 시 부드러운 효과 */
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            text-align: center;
         }
 
-        .redirect-button {
+        .controls button {
+            padding: 12px 30px;
+            font-size: 18px;
+            background-color: #f5f5f5;
+            border: 2px solid #6b4f2b;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+            color: #6b4f2b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .controls button:hover {
+            background-color: #6b4f2b;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+  
+
+        /* 버튼 스타일 */
+        .redirect-button, .restart-button {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background-color: #f5f5f5;
+            border: 2px solid #6b4f2b;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            font-family: 'Georgia', serif;
+            color: #6b4f2b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        .restart-button{
+            background-color: #e07b7b;
+            color: white;
+        }
+        .redirect-button:hover,  .restart-button:hover {
+            background-color: #6b4f2b;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
         .restart-button {
-            position: absolute;
-            top: 10px;
-            right: 10px; /* 오른쪽에 배치 */
-            background-color: #4CAF50; /* 다른 색상으로 구분 */
+            right: 20px; /* 변경된 부분: right로 위치를 설정 */
+            left: auto; /* left 속성은 필요 없으므로 제거 */
         }
 
-        .redirect-button:hover, .restart-button:hover {
-            background-color: #e07b7b; /* 버튼에 마우스 오버 시 색상 변경 */
-        }
+     
 
     </style>
 </head>
