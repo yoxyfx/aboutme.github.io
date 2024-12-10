@@ -94,12 +94,44 @@
         }
 
         .drawer:hover .drawer-handle {
-            transform: translateX(15px);
             background-color: #bdbdbd;
         }
 
-        .drawer:hover {
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        /* 서랍별 다르게 움직이도록 설정 */
+        .drawer[data-stage="1"]:hover .drawer-handle {
+            transform: translateX(10px);
+        }
+
+        .drawer[data-stage="2"]:hover .drawer-handle {
+            transform: translateX(20px);
+        }
+
+        .drawer[data-stage="3"]:hover .drawer-handle {
+            transform: translateX(5px);
+        }
+
+        .drawer[data-stage="4"]:hover .drawer-handle {
+            transform: translateX(25px);
+        }
+
+        .drawer[data-stage="5"]:hover .drawer-handle {
+            transform: translateX(15px);
+        }
+
+        .drawer[data-stage="6"]:hover .drawer-handle {
+            transform: translateX(30px);
+        }
+
+        .drawer[data-stage="7"]:hover .drawer-handle {
+            transform: translateX(8px);
+        }
+
+        .drawer[data-stage="8"]:hover .drawer-handle {
+            transform: translateX(18px);
+        }
+
+        .drawer[data-stage="9"]:hover .drawer-handle {
+            transform: translateX(22px);
         }
 
         .drawer:nth-child(1) { animation-delay: 0.1s; }
@@ -158,10 +190,8 @@
 </div>
 
 <script>
-   
     const drawerHandles = document.querySelectorAll('.drawer-handle');
 
-   
     drawerHandles.forEach(handle => {
         handle.addEventListener('click', () => {
             const stage = handle.parentElement.getAttribute('data-stage');
