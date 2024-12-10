@@ -52,25 +52,34 @@
             width: 200px;
             margin-top: 10px;
         }
-        #homeBtn {
-            position: absolute; 
-            top: 10px; 
-            left: 10px; 
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #a8dadc; /* 부드러운 파란색 */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #homeBtn:hover {
-            background-color: #457b9d;
-        }
+        .redirect-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 12px 25px;
+      background-color: #f5f5f5;
+      border: 2px solid #6b4f2b;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 18px;
+      font-family: 'Georgia', serif;
+      color: #6b4f2b;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .redirect-button:hover {
+      background-color: #6b4f2b;
+      color: white;
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
     </style>
 </head>
-<body>
-    <button id="homeBtn">홈으로</button> 
+<body>  
+    <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
     <canvas id="canvas" width="800" height="600"></canvas>
     
     <div class="controls">

@@ -49,28 +49,38 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        button.redirect-button {
-            left: 10px;
-            background-color: #9fd3c7; /* 부드러운 파스텔 그린 */
-            color: #333;
+        /* 버튼 스타일 */
+        .redirect-button, .restart-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background-color: #f5f5f5;
+            border: 2px solid #6b4f2b;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            font-family: 'Georgia', serif;
+            color: #6b4f2b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        .reset-button{
+            background-color: #e07b7b;
+            color: white;
+        }
+        .redirect-set:hover,  .reset-button:hover {
+            background-color: #6b4f2b;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
-        button.reset-button {
-            left: 200px;
-            background-color: #f5c6c0; /* 부드러운 파스텔 핑크 */
-            color: #333;
-        }
-
-        button:hover {
-            transform: scale(1.05); /* 버튼 확대 효과 */
-        }
-
-        button.redirect-button:hover {
-            background-color: #87bdb2; /* 호버시 파스텔 그린 변형 */
-        }
-
-        button.reset-button:hover {
-            background-color: #e1b5b1; /* 호버시 파스텔 핑크 변형 */
+        .resett-button {
+            right: 0px; /* 변경된 부분: right로 위치를 설정 */
+            left: auto; /* left 속성은 필요 없으므로 제거 */
         }
 
         img.fixed {
