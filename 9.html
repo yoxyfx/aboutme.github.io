@@ -39,8 +39,33 @@
             position: relative;
             transition: transform 1s ease-in-out;
         }
+        .redirect-button, .reset-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background-color: #f5f5f5;
+            border: 2px solid #6b4f2b;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            font-family: 'Georgia', serif;
+            color: #6b4f2b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+       
+        .redirect-button:hover {
+            background-color: #6b4f2b;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
 
-        .button, #throwCap {
+       #throwCap {
             padding: 12px 25px;
             font-size: 16px;
             cursor: pointer;
@@ -56,13 +81,13 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .button:hover, #throwCap:hover {
+         #throwCap:hover {
             background-color: #f1e3d8;
             color: #6c4f3d;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .button:focus, #throwCap:focus {
+      #throwCap:focus {
             outline: none;
         }
 
