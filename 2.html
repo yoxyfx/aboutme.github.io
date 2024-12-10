@@ -15,70 +15,74 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #f0e5d8; /* 부드러운 크림색 배경 */
+            background-color: #f0e5d8;
             font-family: 'Courier New', Courier, monospace;
-            position: relative; 
+            position: relative;
             background-image: url('https://www.transparenttextures.com/patterns/old-map.png');
             background-size: cover;
         }
         canvas {
-            border: 5px solid #ffb6c1; /* 연한 핑크색 테두리 */
+            border: 10px solid #8b4513; /* 더 두꺼운 브라운 테두리 */
             background-color: #fff8e1; /* 종이 색 */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
-            border-radius: 10px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); /* 입체적인 그림자 */
+            border-radius: 15px;
+            margin-top: 20px;
         }
         .controls {
             margin-top: 20px;
-            background-color: #ffecd1; /* 부드러운 파스텔 색 */
+            background-color: #f5deb3; /* 연한 베이지 색 배경 */
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            font-family: 'Georgia', serif; /* 스케치북 느낌을 주기 위해 손글씨 스타일의 폰트 사용 */
         }
         button, input {
-            padding: 10px 20px;
+            padding: 12px 25px;
             font-size: 16px;
             margin-right: 10px;
-            background-color: #ffb6c1; /* 연한 핑크색 */
+            background-color: #ffb6c1;
             color: #fff;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            font-family: 'Georgia', serif;
         }
         button:hover, input:hover {
-            background-color: #f4a261; /* 버튼 색상 변화 */
+            background-color: #f4a261;
         }
         #sizeSlider {
-            width: 200px;
+            width: 220px;
             margin-top: 10px;
         }
         .redirect-button {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      padding: 12px 25px;
-      background-color: #f5f5f5;
-      border: 2px solid #6b4f2b;
-      border-radius: 50px;
-      cursor: pointer;
-      font-size: 18px;
-      font-family: 'Georgia', serif;
-      color: #6b4f2b;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-    }
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            background-color: #f5f5f5;
+            border: 2px solid #6b4f2b;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            font-family: 'Georgia', serif;
+            color: #6b4f2b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
 
-    .redirect-button:hover {
-      background-color: #6b4f2b;
-      color: white;
-      transform: scale(1.1);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-    }
+        .redirect-button:hover {
+            background-color: #6b4f2b;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
     </style>
 </head>
-<body>  
+<body>
     <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
     <canvas id="canvas" width="800" height="600"></canvas>
     
@@ -90,6 +94,7 @@
         <button id="clearBtn">캔버스 초기화</button>
         <label for="sizeSlider">굵기:</label>
         <input type="range" id="sizeSlider" min="1" max="20" value="5"> 
+        <button id="saveBtn">그림 저장</button> 
     </div>
 
     <script>
@@ -153,8 +158,12 @@
                 meta.size = e.target.value; 
             };
 
-            d.getElementById('homeBtn').onclick = () => {
-                window.location.href = 'index.html';
+            d.getElementById('saveBtn').onclick = () => {
+                var imageURL = canvas.toDataURL("image/png");
+                var link = document.createElement('a');
+                link.href = imageURL;
+                link.download = 'sketchbook.png';
+                link.click();
             };
         };
     </script>
