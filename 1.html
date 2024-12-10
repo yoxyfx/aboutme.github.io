@@ -31,44 +31,73 @@
     }
 
     .controls button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: white;
-      border: none;
-      border-radius: 5px;
+      padding: 12px 30px;
+      font-size: 18px;
+      background-color: #f5f5f5;
+      border: 2px solid #6b4f2b;
+      border-radius: 50px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      font-family: 'Georgia', serif;
+      color: #6b4f2b;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
     }
 
     .controls button:hover {
-      background-color: #ddd;
+      background-color: #6b4f2b;
+      color: white;
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     }
 
     .toggle-mode {
-      margin-top: 10px;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
+      margin-top: 15px;
+      padding: 12px 30px;
+      border: 2px solid #6b4f2b;
+      border-radius: 50px;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 18px;
+      font-family: 'Georgia', serif;
+      color: #6b4f2b;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      background-color: #f5f5f5;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
     }
 
-   
+    .toggle-mode:hover {
+      background-color: #6b4f2b;
+      color: white;
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
     .redirect-button {
       position: absolute;
       top: 20px;
       left: 20px;
-      padding: 10px 15px;
-      background-color: white;
-      border: none;
-      border-radius: 5px;
+      padding: 12px 25px;
+      background-color: #f5f5f5;
+      border: 2px solid #6b4f2b;
+      border-radius: 50px;
       cursor: pointer;
-      transition: background-color 0.3s;
-      font-size: 16px;
+      font-size: 18px;
+      font-family: 'Georgia', serif;
+      color: #6b4f2b;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
     }
 
     .redirect-button:hover {
-      background-color: #ddd;
+      background-color: #6b4f2b;
+      color: white;
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     }
   </style>
 </head>
@@ -79,7 +108,6 @@
     <button id="toggleModeButton" class="toggle-mode">Switch to Light Mode</button>
   </div>
   
-
   <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
 
   <script>
@@ -124,7 +152,6 @@
           this.x += this.dx;
           this.y += this.dy;
 
-       
           if (this.x + this.radius > width || this.x - this.radius < 0) {
             this.dx = -this.dx;
           }
@@ -132,13 +159,11 @@
             this.dy = -this.dy;
           }
         } else {
-      
           const centerX = width / 2;
           const centerY = height / 2;
           this.x += (centerX - this.x) * 0.05;
           this.y += (centerY - this.y) * 0.05;
 
-         
           if (this.radius > 0.1 && !combined) {
             this.radius *= 0.95;
           } else {
@@ -149,7 +174,6 @@
       };
     }
 
-  
     function createCircles() {
       circles = [];
       for (let i = 0; i < numCircles; i++) {
@@ -196,15 +220,12 @@
       animationId = requestAnimationFrame(animate);
     }
 
-
     createCircles();
     animate();
-
 
     setTimeout(() => {
       exploded = true;
     }, 3000);
-
 
     const toggleButton = document.getElementById('toggleButton');
     toggleButton.addEventListener('click', () => {
@@ -217,7 +238,6 @@
       }
       isPaused = !isPaused;
     });
-
 
     const toggleModeButton = document.getElementById('toggleModeButton');
     toggleModeButton.addEventListener('click', () => {
