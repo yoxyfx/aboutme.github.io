@@ -16,6 +16,8 @@
         body {
             font-family: 'Special Elite', cursive; /* 빈티지 느낌의 글씨체 */
             background-color: #f4f1ea; /* 부드러운 파스텔 베이지 배경 */
+            background-image: url('https://www.transparenttextures.com/patterns/old-map.png'); /* 빈티지 텍스쳐 이미지 */
+            background-repeat: repeat; /* 텍스쳐 반복 */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -77,20 +79,30 @@
             box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3), 0 4px 15px rgba(0, 0, 0, 0.1);
             border: 10px solid #c0a48c; /* 따뜻한 파스텔 브라운 색상 */
             animation: rise 1s ease forwards;
+            margin-bottom: 20px; /* 서랍 사이 여백 추가 */
+            z-index: 1; /* 기본 z-index */
         }
 
+        /* 서랍이 열리는 애니메이션 */
         @keyframes rise {
             from {
-                transform: translateY(20px);
+                transform: translateY(20px) scale(0.9); /* 처음에는 작게 시작 */
                 opacity: 0;
             }
             to {
-                transform: translateY(0);
+                transform: translateY(0) scale(1); /* 끝에서는 원래 크기로 */
                 opacity: 1;
             }
         }
 
-        .drawer-handle {
+        .drawer:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transform: scale(1.1); /* 크기 확대 */
+            z-index: 10; /* 호버 시 z-index 값 증가 */
+        }
+
+        .drawer .drawer-handle {
+            position: relative;
             width: 100%;
             height: 100%;
             color: #ffffff;
@@ -101,45 +113,69 @@
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
             transition: transform 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease, border-radius 0.4s ease;
             box-shadow: inset 0 -2px 5px rgba(0, 0, 0, 0.2);
-            border-radius: 10px; /* 직각 */
+            border-radius: 10px; 
+            z-index: 1; /* 기본 핸들의 z-index */
         }
 
-        /* 둥근 모서리 */
-        .drawer[data-stage="1"]:hover .drawer-handle,
-        .drawer[data-stage="3"]:hover .drawer-handle,
-        .drawer[data-stage="5"]:hover .drawer-handle,
-        .drawer[data-stage="7"]:hover .drawer-handle,
-        .drawer[data-stage="9"]:hover .drawer-handle {
-            transform: translateX(20px);
+        /* 핑크 색상이 겹치지 않도록 설정 */
+        .drawer[data-stage="1"]:hover .drawer-handle {
             background-color: #f0a14f;
-            border:1px;
-            border-radius: 15px; /* 둥근 모서리 */
+            transform: translateX(20px);
+            z-index: 15; /* 색이 바뀐 핸들이 더 위로 올라가게 설정 */
         }
 
-        /* 직각 모서리 */
-        .drawer[data-stage="2"]:hover .drawer-handle,
-        .drawer[data-stage="4"]:hover .drawer-handle,
-        .drawer[data-stage="6"]:hover .drawer-handle,
-        .drawer[data-stage="8"]:hover .drawer-handle {
+        .drawer[data-stage="2"]:hover .drawer-handle {
+            background-color: #f79c42;
             transform: translateX(40px);
-            background-color: #e0b29d;
-            border:1px;
-            border-radius: 15px; /* 직각 */
+            z-index: 15; /* 색이 바뀐 핸들이 더 위로 올라가게 설정 */
         }
 
-        .drawer:hover {
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        .drawer[data-stage="3"]:hover .drawer-handle {
+            background-color: #f9c35c;
+            transform: translateX(60px);
+            z-index: 15; /* 색이 바뀐 핸들이 더 위로 올라가게 설정 */
         }
 
-        .drawer:nth-child(1) { animation-delay: 0.1s; }
-        .drawer:nth-child(2) { animation-delay: 0.2s; }
-        .drawer:nth-child(3) { animation-delay: 0.3s; }
-        .drawer:nth-child(4) { animation-delay: 0.4s; }
-        .drawer:nth-child(5) { animation-delay: 0.5s; }
-        .drawer:nth-child(6) { animation-delay: 0.6s; }
-        .drawer:nth-child(7) { animation-delay: 0.7s; }
-        .drawer:nth-child(8) { animation-delay: 0.8s; }
-        .drawer:nth-child(9) { animation-delay: 0.9s; }
+        .drawer[data-stage="4"]:hover .drawer-handle {
+            background-color: #f1b5d1;
+            transform: translateX(80px);
+            z-index: 15; /* 색이 바뀐 핸들이 더 위로 올라가게 설정 */
+        }
+
+        .drawer[data-stage="5"]:hover .drawer-handle {
+            background-color: #ff5d88;
+            transform: translateX(100px);
+            z-index: 15; /* 색이 바뀐 핸들이 더 위로 올라가게 설정 */
+        }
+
+        .drawer[data-stage="6"]:hover .drawer-handle {
+            background-color: #ff63a1;
+            transform: translateX(120px);
+            z-index: 15; /* 색이 바뀐 핸들이 더 위로 올라가게 설정 */
+        }
+
+        .drawer[data-stage="7"]:hover .drawer-handle {
+            background-color: #f48c8e;
+            transform: translateX(140px);
+            z-index: 15; /* 색이 바뀐 핸들이 더 위로 올라가게 설정 */
+        }
+
+        .drawer[data-stage="8"]:hover .drawer-handle {
+            background-color: #f0a1c3;
+            transform: translateX(160px);
+            z-index: 15; /* 색이 바뀐 핸들이 더 위로 올라가게 설정 */
+        }
+
+        .drawer[data-stage="9"]:hover .drawer-handle {
+            background-color: #f089b8;
+            transform: translateX(180px);
+            z-index: 15; /* 색이 바뀐 핸들이 더 위로 올라가게 설정 */
+        }
+
+        .drawer:hover .drawer-handle {
+            transform: scale(1.1); /* 핸들도 살짝 커짐 */
+            z-index: 20; /* 핸들이 더 위로 올라가게 */
+        }
     </style>
 </head>
 <body>
