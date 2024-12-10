@@ -8,8 +8,8 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #ffeef2; /* 파스텔 핑크 배경 */
-            font-family: 'Georgia', serif; /* 버튼 스타일 유지 */
+            background-color: #fdf4f9;
+            font-family: 'Poppins', sans-serif; /* 모던한 서체 */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -19,25 +19,24 @@
         .container {
             text-align: center;
             background: #ffffff;
-            border: 8px dashed #ffb6c1; /* 파스텔 분홍 테두리 */
+            border: 10px solid #f9c8d4; /* 파스텔 핑크 테두리 */
             border-radius: 25px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             width: 90%;
-            max-width: 700px;
+            max-width: 900px;
             position: relative;
         }
 
         #imageContainer {
-            width: 350px;
-            height: 350px;
-            background-color: #fff5f8; /* 부드러운 분홍색 */
-            border: 5px solid #ffc0cb; /* 연한 핑크 테두리 */
-            border-radius: 20px;
+            width: 400px;
+            height: 400px;
+            background-color: #ffeeef;
+            border: 6px solid #f9c8d4;
+            border-radius: 15px;
             overflow: hidden;
             margin: 20px auto;
-            position: relative;
-            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
         img {
@@ -48,33 +47,31 @@
         }
 
         #img-black {
-            display: block; /* 기본 이미지 */
+            display: block;
         }
 
         .button-group {
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         button {
             padding: 12px 25px;
-            background-color: #f5f5f5;
-            border: 2px solid #6b4f2b;
-            border-radius: 50px;
+            background-color: #f9e2e8;
+            border: 2px solid #f497a3;
+            border-radius: 30px;
             cursor: pointer;
             font-size: 18px;
-            font-family: 'Georgia', serif;
-            color: #6b4f2b;
+            color: #a45a6a;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
 
         button:hover {
-            background-color: #6b4f2b;
+            background-color: #a45a6a;
             color: white;
             transform: scale(1.1);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         }
 
         .redirect-button {
@@ -82,51 +79,65 @@
             top: 20px;
             left: 20px;
             padding: 12px 20px;
-            background-color: #f5f5f5;
-            border: 2px solid #ffb6c1;
-            border-radius: 30px;
-            cursor: pointer;
+            background-color: #ffeeef;
+            border: 2px solid #f9c8d4;
+            border-radius: 20px;
             font-size: 16px;
-            color: #ff69b4;
-            text-transform: uppercase;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            color: #f497a3;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .redirect-button:hover {
-            background-color: #ffb6c1;
+            background-color: #f497a3;
             color: white;
             transform: scale(1.1);
         }
 
-        /* 귀여운 강아지 집 디자인 */
         .dog-house {
             position: absolute;
-            top: -50px;
+            top: -70px;
             left: 50%;
             transform: translateX(-50%);
-            width: 180px;
-            height: 120px;
-            background: #ffdab9;
+            width: 250px;
+            height: 200px;
+            background: #f9e2e8;
             clip-path: polygon(50% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%);
+            border: 6px solid #f497a3;
             z-index: -1;
-            border: 4px solid #ffb6c1;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
         }
 
-        /* 강아지 집 문 */
         .dog-door {
             position: absolute;
-            top: 60%;
+            bottom: 10px;
             left: 50%;
-            transform: translate(-50%, -50%);
-            width: 50px;
-            height: 60px;
-            background-color: #d2691e;
-            border-radius: 15px;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 90px;
+            background-color: #a45a6a;
+            border-radius: 10px 10px 0 0;
+            box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .roof {
+            position: absolute;
+            top: -90px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 280px;
+            height: 160px;
+            background: linear-gradient(145deg, #ffb6c1, #f497a3);
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+            border: 6px solid #f497a3;
+            z-index: -2;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="roof"></div>
         <div class="dog-house">
             <div class="dog-door"></div>
         </div>
@@ -146,7 +157,6 @@
     </div>
 
     <script>
-        // 버튼과 이미지 요소를 가져옵니다.
         const btnBlack = document.getElementById('btn-black');
         const btnBrown = document.getElementById('btn-brown');
         const btnWhite = document.getElementById('btn-white');
@@ -154,7 +164,6 @@
         const imgBrown = document.getElementById('img-brown');
         const imgWhite = document.getElementById('img-white');
 
-        // 공통 함수: 특정 이미지만 보이게 설정
         function showImage(targetImage) {
             imgBlack.style.display = 'none';
             imgBrown.style.display = 'none';
@@ -162,7 +171,6 @@
             targetImage.style.display = 'block';
         }
 
-        // 버튼 클릭 이벤트
         btnBlack.addEventListener('click', () => showImage(imgBlack));
         btnBrown.addEventListener('click', () => showImage(imgBrown));
         btnWhite.addEventListener('click', () => showImage(imgWhite));

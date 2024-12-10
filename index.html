@@ -5,14 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OPEN THE DRAWER!!</title>
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
-
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Special Elite', cursive; 
             background-color: #f4f1ea; 
@@ -23,14 +21,12 @@
             align-items: center;
             height: 100vh;
         }
-
         .container {
             text-align: center;
             width: 100%;
             max-width: 1200px;
             padding: 20px;
         }
-
         @keyframes moveText {
             0% {
                 transform: translateX(-100%);
@@ -42,7 +38,6 @@
                 transform: translateX(0);
             }
         }
-
         h1 {
             margin-bottom: 20px;
             color: #4f3b2f; 
@@ -50,7 +45,6 @@
             text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
             animation: fadeIn 1s, moveText 2s ease-in-out;
         }
-
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -59,14 +53,12 @@
                 opacity: 1;
             }
         }
-
         .drawer-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
         }
-
         .drawer {
             width: calc(33.33% - 30px); 
             height: 150px;
@@ -85,25 +77,21 @@
             justify-content: center;
             align-items: center;
         }
-
-        /* 서랍이 열리는 애니메이션 */
         @keyframes rise {
             from {
-                transform: translateY(20px) scale(0.9); /* 처음에는 작게 시작 */
+                transform: translateY(20px) scale(0.9); 
                 opacity: 0;
             }
             to {
-                transform: translateY(0) scale(1); /* 끝에서는 원래 크기로 */
+                transform: translateY(0) scale(1); 
                 opacity: 1;
             }
         }
-
         .drawer:hover {
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            transform: scale(1.1); /* 크기 확대 */
-            z-index: 10; /* 호버 시 z-index 값 증가 */
+            transform: scale(1.1);
+            z-index: 10;
         }
-
         .drawer .drawer-handle {
             position: relative;
             width: 100%;
@@ -117,9 +105,8 @@
             transition: transform 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease, border-radius 0.4s ease;
             box-shadow: inset 0 -2px 5px rgba(0, 0, 0, 0.2);
             border-radius: 10px; 
-            z-index: 1; /* 기본 핸들의 z-index */
+            z-index: 1;
         }
-
         .drawer .drawer-handle .circle {
             width: 40px;
             height: 40px;
@@ -133,64 +120,54 @@
             color: #4f3b2f;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
-
         .drawer[data-stage="1"]:hover .drawer-handle {
             background-color: #f0a14f;
             transform: translateX(20px);
-            z-index: 15; /* 색이 바뀐 핸들이 더 위로 올라가게 설정 */
+            z-index: 15;
         }
-
         .drawer[data-stage="2"]:hover .drawer-handle {
             background-color: #f79c42;
             transform: translateX(40px);
-            z-index: 15; /* 색이 바뀐 핸들이 더 위로 올라가게 설정 */
+            z-index: 15;
         }
-
         .drawer[data-stage="3"]:hover .drawer-handle {
             background-color: #f9c35c;
             transform: translateX(60px);
-            z-index: 15; /* 색이 바뀐 핸들이 더 위로 올라가게 설정 */
+            z-index: 15;
         }
-
         .drawer[data-stage="4"]:hover .drawer-handle {
             background-color: #f1b5d1;
             transform: translateX(80px);
-            z-index: 15; /* 색이 바뀐 핸들이 더 위로 올라가게 설정 */
+            z-index: 15;
         }
-
         .drawer[data-stage="5"]:hover .drawer-handle {
             background-color: #ff5d88;
             transform: translateX(100px);
-            z-index: 15; /* 색이 바뀐 핸들이 더 위로 올라가게 설정 */
+            z-index: 15;
         }
-
         .drawer[data-stage="6"]:hover .drawer-handle {
             background-color: #ff63a1;
             transform: translateX(120px);
-            z-index: 15; /* 색이 바뀐 핸들이 더 위로 올라가게 설정 */
+            z-index: 15;
         }
-
         .drawer[data-stage="7"]:hover .drawer-handle {
             background-color: #f48c8e;
             transform: translateX(140px);
-            z-index: 15; /* 색이 바뀐 핸들이 더 위로 올라가게 설정 */
+            z-index: 15;
         }
-
         .drawer[data-stage="8"]:hover .drawer-handle {
             background-color: #f0a1c3;
             transform: translateX(160px);
-            z-index: 15; /* 색이 바뀐 핸들이 더 위로 올라가게 설정 */
+            z-index: 15;
         }
-
         .drawer[data-stage="9"]:hover .drawer-handle {
             background-color: #f089b8;
             transform: translateX(180px);
-            z-index: 15; /* 색이 바뀐 핸들이 더 위로 올라가게 설정 */
+            z-index: 15;
         }
-
         .drawer:hover .drawer-handle {
-            transform: scale(1.1); /* 핸들도 살짝 커짐 */
-            z-index: 20; /* 핸들이 더 위로 올라가게 */
+            transform: scale(1.1);
+            z-index: 20;
         }
     </style>
 </head>
@@ -200,72 +177,53 @@
     <div class="drawer-container">
         <div class="drawer" data-stage="1">
             <div class="drawer-handle">
-              
-                <div class="circle">1</div> <!-- 원 추가 -->
+                <div class="circle">1</div>
             </div>
         </div>
-        
         <div class="drawer" data-stage="2">
             <div class="drawer-handle">
-             
-                <div class="circle">2</div> <!-- 원 추가 -->
+                <div class="circle">2</div>
             </div>
         </div>
-        
         <div class="drawer" data-stage="3">
             <div class="drawer-handle">
-            
-                <div class="circle">3</div> <!-- 원 추가 -->
+                <div class="circle">3</div>
             </div>
         </div>
-
         <div class="drawer" data-stage="4">
             <div class="drawer-handle">
-             
-                <div class="circle">4</div> <!-- 원 추가 -->
+                <div class="circle">4</div>
             </div>
         </div>
-        
         <div class="drawer" data-stage="5">
             <div class="drawer-handle">
-             
-                <div class="circle">5</div> <!-- 원 추가 -->
+                <div class="circle">5</div>
             </div>
         </div>
-
         <div class="drawer" data-stage="6">
             <div class="drawer-handle">
-            
-                <div class="circle">6</div> <!-- 원 추가 -->
+                <div class="circle">6</div>
             </div>
         </div>
-
         <div class="drawer" data-stage="7">
             <div class="drawer-handle">
-              
-                <div class="circle">7</div> <!-- 원 추가 -->
+                <div class="circle">7</div>
             </div>
         </div>
-
         <div class="drawer" data-stage="8">
             <div class="drawer-handle">
-              
-                <div class="circle">8</div> <!-- 원 추가 -->
+                <div class="circle">8</div>
             </div>
         </div>
-        
         <div class="drawer" data-stage="9">
             <div class="drawer-handle">
-               
-                <div class="circle">9</div> <!-- 원 추가 -->
+                <div class="circle">9</div>
             </div>
         </div>
     </div>
 </div>
-
 <script>
     const drawerHandles = document.querySelectorAll('.drawer-handle');
-
     drawerHandles.forEach(handle => {
         handle.addEventListener('click', () => {
             const stage = handle.parentElement.getAttribute('data-stage');
