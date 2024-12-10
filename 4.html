@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Adjustable Car Animation</title>
+    <title>4</title>
     <style>
         body {
             overflow: hidden;
@@ -32,7 +32,7 @@
             align-items: center;
         }
         .fast-container input[type="range"] {
-            -webkit-appearance: none; /* For Safari */
+            -webkit-appearance: none; 
             width: 200px;
             height: 10px;
             background: #ddd;
@@ -41,7 +41,7 @@
             transition: background 0.3s ease;
         }
         
-        /* Custom Thumb */
+       
         .fast-container input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -116,8 +116,8 @@
         function updateAnimationSpeed() {
             const speed = fast.value;
 
-            // 속도가 반대 방향으로 적용되도록 함
-            const animationSpeed = 22 - speed;  // 2에서 20까지 값을 2에서 22초로 반영
+          
+            const animationSpeed = 22 - speed;  
 
             box.style.animation = `run ${animationSpeed}s linear infinite`;
         }

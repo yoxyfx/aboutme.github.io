@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Draggable with Reset</title>
+    <title>8</title>
     <style>
         body {
             margin: 0;
@@ -49,7 +49,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        /* 버튼 스타일 */
+       
         .redirect-button, .reset-button {
             position: absolute;
             top: 20px;
@@ -103,7 +103,6 @@
     <button class="reset-button" onclick="resetPositions()">Reset Positions</button>
     <img src="img/Asset 1.png" class="fixed" alt="Fixed Image">
 
-    <!-- Moveable PNG Images -->
     <img src="img/move1.png" class="draggable" style="top: 120px; left: 1350px;" alt="Moveable Image">
     <img src="img/move2.png" class="draggable" style="top: 700px; left: 400px;" alt="Moveable Image">
     <img src="img/move3.png" class="draggable" style="top: 200px; left: 150px;" alt="Moveable Image">
@@ -115,14 +114,14 @@
     <img src="img/move9.png" class="draggable" style="top: 350px; left: 1500px;" alt="Moveable Image">
 
     <script>
-        // Save initial positions
+    
         const initialPositions = Array.from(document.querySelectorAll('.draggable')).map(element => ({
             element,
             top: element.style.top,
             left: element.style.left
         }));
 
-        // Reset positions to their initial state
+
         function resetPositions() {
             initialPositions.forEach(({ element, top, left }) => {
                 element.style.top = top;
@@ -130,7 +129,6 @@
             });
         }
 
-        // Make only draggable images movable within the container
         document.querySelectorAll('.draggable').forEach(element => {
             element.addEventListener('mousedown', (event) => {
                 let shiftX = event.clientX - element.getBoundingClientRect().left;
@@ -152,7 +150,7 @@
                 });
             });
 
-            element.ondragstart = () => false; // Disable default drag behavior
+            element.ondragstart = () => false; 
         });
     </script>
 </body>
