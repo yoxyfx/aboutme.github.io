@@ -9,7 +9,7 @@
             margin: 0;
             padding: 0;
             background-color: #fdf4f9;
-            font-family: 'Poppins', sans-serif; /* 모던한 서체 */
+            font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -19,7 +19,7 @@
         .container {
             text-align: center;
             background: #ffffff;
-            border: 10px solid #f9c8d4; /* 파스텔 핑크 테두리 */
+            border: 10px solid #f9c8d4; /* 기본 파스텔 핑크 테두리 */
             border-radius: 25px;
             padding: 40px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -51,7 +51,11 @@
         }
 
         .button-group {
+            display: flex;
+            justify-content: space-between; /* 버튼들을 양옆으로 배치 */
             margin-top: 20px;
+            flex-wrap: wrap; /* 줄바꿈이 필요하면 줄바꿈 */
+            gap: 20px; /* 버튼 간 간격 */
         }
 
         button {
@@ -65,6 +69,7 @@
             text-transform: uppercase;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
+            flex: 1 1 calc(33.333% - 20px); /* 한 줄에 세 개씩 배치 */
         }
 
         button:hover {
@@ -78,21 +83,27 @@
             position: absolute;
             top: 20px;
             left: 20px;
-            padding: 12px 20px;
-            background-color: #ffeeef;
-            border: 2px solid #f9c8d4;
-            border-radius: 20px;
-            font-size: 16px;
-            color: #f497a3;
+            padding: 12px 25px;
+            background-color: #f5f5f5;
+            border: 2px solid #6b4f2b;
+            border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-size: 18px;
+            font-family: 'Georgia', serif;
+            color: #6b4f2b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
         }
 
         .redirect-button:hover {
-            background-color: #f497a3;
+            background-color: #6b4f2b;
             color: white;
             transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
+
 
         .dog-house {
             position: absolute;
@@ -120,28 +131,17 @@
             box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .roof {
-            position: absolute;
-            top: -90px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 280px;
-            height: 160px;
-            background: linear-gradient(145deg, #ffb6c1, #f497a3);
-            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-            border: 6px solid #f497a3;
-            z-index: -2;
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-        }
+  
     </style>
 </head>
 <body>
+    <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
     <div class="container">
-        <div class="roof"></div>
+  
         <div class="dog-house">
             <div class="dog-door"></div>
         </div>
-        <button class="redirect-button" onclick="window.location.href='index.html'">Go Back</button>
+  
 
         <div id="imageContainer">
             <img id="img-black" src="img/검정.png" alt="검정 강아지">
@@ -150,9 +150,13 @@
         </div>
 
         <div class="button-group">
-            <button id="btn-black">검정</button>
-            <button id="btn-brown">갈색</button>
-            <button id="btn-white">흰색</button>
+            <button id="btn-black" data-bgcolor="#ffeeef" data-bordercolor="#f9c8d4" data-image="img-black">검정</button>
+            <button id="btn-brown" data-bgcolor="#f1e0b7" data-bordercolor="#e0d7b5" data-image="img-brown">갈색</button>
+            <button id="btn-white" data-bgcolor="#ffffff" data-bordercolor="#f1f1f1" data-image="img-white">흰색</button>
+            <!-- 집 색깔을 변경하는 버튼 추가 -->
+            <button id="btn-house-black" data-bgcolor="#f1e0e0" data-bordercolor="#e0b5b5">검정 집</button>
+            <button id="btn-house-brown" data-bgcolor="#e6d0b9" data-bordercolor="#d6bfa7">갈색 집</button>
+            <button id="btn-house-white" data-bgcolor="#f9f9f9" data-bordercolor="#d1d1d1">흰색 집</button>
         </div>
     </div>
 
@@ -160,9 +164,15 @@
         const btnBlack = document.getElementById('btn-black');
         const btnBrown = document.getElementById('btn-brown');
         const btnWhite = document.getElementById('btn-white');
+        const btnHouseBlack = document.getElementById('btn-house-black');
+        const btnHouseBrown = document.getElementById('btn-house-brown');
+        const btnHouseWhite = document.getElementById('btn-house-white');
         const imgBlack = document.getElementById('img-black');
         const imgBrown = document.getElementById('img-brown');
         const imgWhite = document.getElementById('img-white');
+        const imageContainer = document.getElementById('imageContainer');
+        const dogHouse = document.querySelector('.dog-house');
+        const container = document.querySelector('.container');
 
         function showImage(targetImage) {
             imgBlack.style.display = 'none';
@@ -171,9 +181,45 @@
             targetImage.style.display = 'block';
         }
 
-        btnBlack.addEventListener('click', () => showImage(imgBlack));
-        btnBrown.addEventListener('click', () => showImage(imgBrown));
-        btnWhite.addEventListener('click', () => showImage(imgWhite));
+        // 버튼 클릭 시 이미지와 배경 색상 변경
+        function changeBackgroundColor(color) {
+            imageContainer.style.backgroundColor = color;
+        }
+
+        // 집 배경 및 테두리 색상 변경
+        function changeHouseBackgroundAndBorder(bgColor, borderColor) {
+            dogHouse.style.backgroundColor = bgColor;
+            dogHouse.style.borderColor = borderColor;
+            container.style.borderColor = borderColor; // 컨테이너 테두리 색상 변경
+        }
+
+        btnBlack.addEventListener('click', () => {
+            showImage(imgBlack);
+            changeBackgroundColor(btnBlack.dataset.bgcolor);
+        });
+
+        btnBrown.addEventListener('click', () => {
+            showImage(imgBrown);
+            changeBackgroundColor(btnBrown.dataset.bgcolor);
+        });
+
+        btnWhite.addEventListener('click', () => {
+            showImage(imgWhite);
+            changeBackgroundColor(btnWhite.dataset.bgcolor);
+        });
+
+        // 집 색상 변경 버튼
+        btnHouseBlack.addEventListener('click', () => {
+            changeHouseBackgroundAndBorder(btnHouseBlack.dataset.bgcolor, btnHouseBlack.dataset.bordercolor);
+        });
+
+        btnHouseBrown.addEventListener('click', () => {
+            changeHouseBackgroundAndBorder(btnHouseBrown.dataset.bgcolor, btnHouseBrown.dataset.bordercolor);
+        });
+
+        btnHouseWhite.addEventListener('click', () => {
+            changeHouseBackgroundAndBorder(btnHouseWhite.dataset.bgcolor, btnHouseWhite.dataset.bordercolor);
+        });
     </script>
 </body>
 </html>
