@@ -12,44 +12,49 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Georgia', serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
             min-height: 100vh;
-            background-color: #ffaea3;
+            background-color: #f9f1e5; /* 빈티지 느낌을 주는 부드러운 크림색 배경 */
+            color: #4e4e4e; /* 어두운 회색 글자색 */
+            text-align: center; /* 텍스트 가운데 정렬 */
         }
 
         .redirect-button {
-            margin: 100px; 
-            padding: 10px 20px;
-            font-size: 1rem;
-            border: none;
-            background-color: #3498db;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            background-color: #f8cfa5; /* 부드러운 빈티지 오렌지색 */
             color: white;
-            border-radius: 5px;
+            border: 2px solid #d7a47e;
+            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         .redirect-button:hover {
-            background-color: #91a8ba;
+            background-color: #e2b28b; /* 호버시 색상 변화 */
+            transform: scale(1.05); /* 호버시 버튼 확대 효과 */
         }
 
         ul {
             list-style: none;
             padding: 0;
             margin: 0;
-        }
-
-        #wrap {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 4개의 카드 정렬 */
-            gap: 10px; /* 카드 간 간격 줄이기 */
-            width: 80%; /* 반응형으로 너비 설정 */
-            max-width: 1500px; /* 최대 너비 */
-            margin-top:100px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* 카드들을 가운데 정렬 */
+            gap: 20px; /* 카드 간 간격 */
+            width: 80%;
+            max-width: 1500px;
+            margin-top: 100px;
         }
 
         li {
@@ -63,10 +68,11 @@
 
         .flip {
             position: relative;
-            width: 318px; /* 카드 크기 더 크게 설정 */
+            width: 318px; /* 카드 크기 */
             height: 318px;
             transition: all 0.7s ease-in-out;
             transform-style: preserve-3d;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* 빈티지 스타일의 깊이감 */
         }
 
         .flip-wrap:hover .flip {
@@ -86,30 +92,40 @@
 
         .front {
             background: url('img/card.png') no-repeat center/cover;
+            background-color: #f2c2a9; /* 빈티지 느낌의 따뜻한 색상 */
+            color: #ffffff;
+            font-size: 2rem;
+            font-weight: bold;
+            background-size: cover;
         }
 
         .back1 {
             background: url('img/card1.png') no-repeat center/cover;
             transform: rotateY(180deg);
+            background-color: #d7b1a1; /* 빈티지한 따뜻한 색상 */
         }
 
         .back2 {
             background: url('img/card2.png') no-repeat center/cover;
             transform: rotateY(180deg);
+            background-color: #bfa68f; /* 부드러운 연한 갈색 */
         }
 
         .back3 {
             background: url('img/card3.png') no-repeat center/cover;
             transform: rotateY(180deg);
+            background-color: #e1bfa1; /* 부드러운 크림색 */
         }
+
         .back4 {
             background: url('img/card4.png') no-repeat center/cover;
             transform: rotateY(180deg);
+            background-color: #d5a27f; /* 빈티지 느낌의 따뜻한 색상 */
         }
     </style>
 </head>
 <body>
-    <!-- 인덱스 버튼 상단 배치 -->
+    <!-- 인덱스 버튼 왼쪽 상단 배치 -->
     <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
 
     <!-- 카드 배치 -->

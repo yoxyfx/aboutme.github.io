@@ -7,6 +7,7 @@
         * {
             padding: 0;
             margin: 0;
+            box-sizing: border-box;
         }
         body {
             display: flex;
@@ -14,28 +15,57 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #ff8623;
+            background-color: #f0e5d8; /* 부드러운 크림색 배경 */
+            font-family: 'Courier New', Courier, monospace;
             position: relative; 
+            background-image: url('https://www.transparenttextures.com/patterns/springy.png'); /* 스프링 느낌 배경 */
+            background-size: cover;
         }
         canvas {
-            border: 2px solid black;
-            background-color: white;
+            border: 5px solid #ffb6c1; /* 연한 핑크색 테두리 */
+            background-color: #fff8e1; /* 종이 색 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+            border-radius: 10px;
         }
         .controls {
             margin-top: 20px;
+            background-color: #ffecd1; /* 부드러운 파스텔 색 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         button, input {
             padding: 10px 20px;
             font-size: 16px;
             margin-right: 10px;
+            background-color: #ffb6c1; /* 연한 핑크색 */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover, input:hover {
+            background-color: #f4a261; /* 버튼 색상 변화 */
         }
         #sizeSlider {
             width: 200px;
+            margin-top: 10px;
         }
         #homeBtn {
             position: absolute; 
             top: 10px; 
             left: 10px; 
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #a8dadc; /* 부드러운 파란색 */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #homeBtn:hover {
+            background-color: #457b9d;
         }
     </style>
 </head>
@@ -71,7 +101,6 @@
                 c.beginPath(); 
                 c.moveTo(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
 
-              
                 if (meta.tool === 'pen') {
                     c.strokeStyle = meta.color; 
                 } else if (meta.tool === 'eraser') {
@@ -86,43 +115,35 @@
                 }
             };
 
-          
             canvas.onmouseup = () => {
                 meta.draw = false;
                 canvas.onmousemove = null;
             };
 
-        
             d.getElementById('clearBtn').onclick = () => {
                 c.clearRect(0, 0, canvas.width, canvas.height);
             };
-
 
             d.getElementById('colorBtn').onclick = () => {
                 d.getElementById('colorPicker').click(); 
             };
 
-        
             d.getElementById('colorPicker').oninput = e => {
                 meta.color = e.target.value; 
             };
 
-    
             d.getElementById('penBtn').onclick = () => {
                 meta.tool = 'pen'; 
             };
 
-     
             d.getElementById('eraserBtn').onclick = () => {
                 meta.tool = 'eraser'; 
             };
 
- 
             d.getElementById('sizeSlider').oninput = e => {
                 meta.size = e.target.value; 
             };
 
-        
             d.getElementById('homeBtn').onclick = () => {
                 window.location.href = 'index.html';
             };
