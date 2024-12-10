@@ -5,12 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+		  body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* 스크롤 비활성화 */
+    height: 100%;
+  }
+
        @keyframes moveLeftRight {
             0% {
                 transform: translateX(0);
             }
             50% {
                 transform: translateX(150px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+		@keyframes moveLeftRight1 {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(30px);
             }
             100% {
                 transform: translateX(0);
@@ -33,10 +51,29 @@
 .moving {
     animation: moveLeftRight 3s ease-in-out infinite;
 }
+.cloud {
+    animation: moveLeftRight1 5s ease-in-out infinite;
+}
 .tower:hover {
             animation: none; /* 움직임 애니메이션 중단 */
             animation: grow-shrink 10s ease-in-out forwards;
         }
+	.container {
+    position: relative; /* 버튼을 SVG 위에 올리기 위한 부모 요소 설정 */
+  }
+
+  svg {
+    width: 100%; /* SVG 크기 설정 */
+    height: auto;
+	margin-top: -10px;
+  }
+
+  .redirect-button {
+    position: absolute; /* SVG 위에 버튼 고정 */
+    top: 20px; /* SVG 상단에서 20px 떨어짐 */
+    left: 20px; /* SVG 왼쪽에서 20px 떨어짐 */
+    z-index: 10; /* 버튼이 SVG 위에 표시되도록 설정 */
+  }
     </style>
 </head>
 <body>
@@ -306,7 +343,7 @@
 			C1174.2,221.7,1168.5,220.5,1163.7,220.6z"/>
 	</g>
 	<path class="st48" d="M1363.8,100.6"/>
-	<g>
+	<g class="cloud">
 		<path class="st46" d="M1187.2,200.6c9.1-7.9,20.9-10.9,31.8-7.9c-1.9-7.7,4.1-14.8,9.8-18.9c4.1-2.9,8.4-5.6,13-6.4
 			c4.7-0.8,9.8,0.5,13.2,4.4c6.1-9.2,17.6-12.3,26.3-7c2.7-15.3,18-25,29.8-19c11.8,6.1,16.8,26.3,9.9,39.4c7.5-5.1,16.8-6.3,24.9-3
 			c8.2,3.2,15.1,10.8,18.1,20.7L1187.2,200.6z"/>
@@ -316,7 +353,7 @@
 			c-6.9,6.6-11,16-11,25.5c-2.9-2.4-7-3.7-10.5-2.5c-3.5,1.3-5.9,5.8-4,9.1c0.5-2.7-1.5-5.7-4.2-6.2c-2.7-0.5-5.7,1.4-6.3,4.2
 			C1261.9,189.6,1267.8,192.8,1271.5,196.7z"/>
 	</g>
-	<g>
+	<g class="cloud">
 		<path class="st46" d="M785.7,282.6c16.9-13.3,38.9-18.2,59.2-13.2c-3.6-12.9,7.6-24.7,18.2-31.6c7.5-4.9,15.6-9.3,24.3-10.7
 			c8.7-1.3,18.2,0.8,24.5,7.4c11.4-15.4,32.8-20.5,49-11.7c5.1-25.5,33.6-41.8,55.5-31.7c21.9,10.1,31.3,43.9,18.3,65.7
 			c14-8.6,31.2-10.4,46.4-5s28.2,18,33.7,34.6L785.7,282.6z"/>

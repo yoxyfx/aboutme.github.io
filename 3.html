@@ -17,16 +17,17 @@
             overflow: hidden; /* 스크롤 방지 */
             background-color: bisque;
         }
+
         #container {
-    position: absolute; /* 위치를 절대적으로 설정 */
-    top: 10%; /* 위에서부터 20% 만큼 아래로 위치 */
-    left: 50%; /* 화면의 중앙에 위치하도록 설정 */
-    transform: translateX(-50%); /* 수평 중앙 정렬 */
-    width: 750px;
-    height: 750px;
-    border: solid;
-    box-shadow: -10px 10px 5px gray;
-}
+            position: absolute;
+            top: 10%; /* 위에서부터 10% */
+            left: 50%; /* 화면 중앙 */
+            transform: translateX(-50%);
+            width: 750px;
+            height: 750px;
+            border: solid;
+            box-shadow: -10px 10px 5px gray;
+        }
 
         .piece {
             width: 250px;
@@ -55,102 +56,85 @@
 <body>
     <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
     <div id="container">
-        <!-- 드래그 가능한 이미지들 -->
-        <img src="img/Layer 1.png" class="piece" id="img1" draggable="true" data-x="0" data-y="0">
-        <img src="img/Layer 2.png" class="piece" id="img2" draggable="true" data-x="250" data-y="0">
-        <img src="img/Layer 3.png" class="piece" id="img3" draggable="true" data-x="500" data-y="0">
-        <img src="img/Layer 4.png" class="piece" id="img4" draggable="true" data-x="0" data-y="250">
-        <img src="img/Layer 5.png" class="piece" id="img5" draggable="true" data-x="250" data-y="250">
-        <img src="img/Layer 6.png" class="piece" id="img6" draggable="true" data-x="500" data-y="250">
-        <img src="img/Layer 7.png" class="piece" id="img7" draggable="true" data-x="0" data-y="500">
-        <img src="img/Layer 8.png" class="piece" id="img8" draggable="true" data-x="250" data-y="500">
-        <img src="img/Layer 9.png" class="piece" id="img9" draggable="true" data-x="500" data-y="500">
+        <img src="img/Layer 1.png" class="piece" id="img1" draggable="true">
+        <img src="img/Layer 2.png" class="piece" id="img2" draggable="true">
+        <img src="img/Layer 3.png" class="piece" id="img3" draggable="true">
+        <img src="img/Layer 4.png" class="piece" id="img4" draggable="true">
+        <img src="img/Layer 5.png" class="piece" id="img5" draggable="true">
+        <img src="img/Layer 6.png" class="piece" id="img6" draggable="true">
+        <img src="img/Layer 7.png" class="piece" id="img7" draggable="true">
+        <img src="img/Layer 8.png" class="piece" id="img8" draggable="true">
+        <img src="img/Layer 9.png" class="piece" id="img9" draggable="true">
     </div>
 
     <script>
-const pieces = document.querySelectorAll('.piece');
-const container = document.getElementById('container');
+        const pieces = document.querySelectorAll('.piece');
+        const container = document.getElementById('container');
 
-// 컨테이너 크기를 기준으로 랜덤 위치 계산
-function getRandomPosition(containerWidth, containerHeight, pieceWidth, pieceHeight) {
-    const x = Math.floor(Math.random() * (containerWidth - pieceWidth));
-    const y = Math.floor(Math.random() * (containerHeight - pieceHeight));
-    return { x, y };
-}
+        // 컨테이너 크기를 기준으로 랜덤 위치 계산
+        function getRandomPosition(containerWidth, containerHeight, pieceWidth, pieceHeight) {
+            const x = Math.floor(Math.random() * (containerWidth - pieceWidth));
+            const y = Math.floor(Math.random() * (containerHeight - pieceHeight));
+            return { x, y };
+        }
 
-// 초기 랜덤 배치
-function setInitialPositions() {
-    const containerWidth = container.offsetWidth;
-    const containerHeight = container.offsetHeight;
+        // 초기 랜덤 배치
+        function setInitialPositions() {
+            const containerWidth = container.offsetWidth;
+            const containerHeight = container.offsetHeight;
 
-    pieces.forEach(piece => {
-        const pieceWidth = piece.offsetWidth;
-        const pieceHeight = piece.offsetHeight;
+            pieces.forEach(piece => {
+                const pieceWidth = piece.offsetWidth;
+                const pieceHeight = piece.offsetHeight;
 
-        // 랜덤 위치 계산
-        const { x, y } = getRandomPosition(containerWidth, containerHeight, pieceWidth, pieceHeight);
+                // 랜덤 위치 계산
+                const { x, y } = getRandomPosition(containerWidth, containerHeight, pieceWidth, pieceHeight);
 
-        // 이미지 위치 설정
-        piece.style.left = `${x}px`;
-        piece.style.top = `${y}px`;
-    });
-}
+                // 이미지 위치 설정
+                piece.style.left = `${x}px`;
+                piece.style.top = `${y}px`;
+            });
+        }
 
-// 드래그 시작 시 처리
-function dragStart(event) {
-    // 현재 드래그 중인 요소의 ID를 저장
-    event.dataTransfer.setData('text/plain', event.target.id);
+        // 드래그 시작 시 처리
+        function dragStart(event) {
+            event.dataTransfer.setData('text/plain', event.target.id);
+            const emptyCanvas = document.createElement('canvas');
+            emptyCanvas.width = 0;
+            emptyCanvas.height = 0;
+            event.dataTransfer.setDragImage(emptyCanvas, 0, 0);
+        }
 
-    // 기본 드래그 미리보기를 제거
-    const emptyCanvas = document.createElement('canvas'); // 빈 캔버스 생성
-    emptyCanvas.width = 0;
-    emptyCanvas.height = 0;
-    event.dataTransfer.setDragImage(emptyCanvas, 0, 0);
-}
+        // 드롭 시 처리
+        function drop(event) {
+            event.preventDefault();
+            const id = event.dataTransfer.getData('text/plain');
+            const draggedElement = document.getElementById(id);
 
-// 드래그가 끝났을 때 처리 (필요하면 추가)
-function dragEnd(event) {
-    console.log('Drag ended');
-}
+            const containerRect = container.getBoundingClientRect();
+            const offsetX = event.clientX - containerRect.left;
+            const offsetY = event.clientY - containerRect.top;
 
-// 컨테이너 위에서 드래그 허용
-function dragOver(event) {
-    event.preventDefault(); // 기본 동작 막기 (드롭 금지 방지)
-}
+            if (offsetX >= 0 && offsetY >= 0 && offsetX <= container.offsetWidth && offsetY <= container.offsetHeight) {
+                draggedElement.style.left = `${offsetX - draggedElement.offsetWidth / 2}px`;
+                draggedElement.style.top = `${offsetY - draggedElement.offsetHeight / 2}px`;
+            }
+        }
 
-// 드롭 시 처리
-function drop(event) {
-    event.preventDefault();
+        // 드래그 허용 설정
+        function dragOver(event) {
+            event.preventDefault();
+        }
 
-    // 드래그 중인 요소의 ID 가져오기
-    const id = event.dataTransfer.getData('text/plain');
-    const draggedElement = document.getElementById(id);
+        pieces.forEach(piece => {
+            piece.addEventListener('dragstart', dragStart);
+        });
 
-    // 드롭된 위치의 좌표 계산
-    const containerRect = container.getBoundingClientRect();
-    const offsetX = event.clientX - containerRect.left;
-    const offsetY = event.clientY - containerRect.top;
+        container.addEventListener('dragover', dragOver);
+        container.addEventListener('drop', drop);
 
-    // 드래그된 요소의 위치를 업데이트
-    if (offsetX >= 0 && offsetY >= 0 && offsetX <= container.offsetWidth && offsetY <= container.offsetHeight) {
-        draggedElement.style.left = `${offsetX - draggedElement.offsetWidth / 2}px`;
-        draggedElement.style.top = `${offsetY - draggedElement.offsetHeight / 2}px`;
-    }
-}
-
-// 각 이미지에 이벤트 추가
-pieces.forEach(piece => {
-    piece.addEventListener('dragstart', dragStart);
-    piece.addEventListener('dragend', dragEnd);
-});
-
-// 컨테이너에 이벤트 추가
-container.addEventListener('dragover', dragOver);
-container.addEventListener('drop', drop);
-
-// 초기 랜덤 위치 설정
-setInitialPositions();
-
-
-    
-</script>
+        // 초기 랜덤 위치 설정
+        setInitialPositions();
+    </script>
+</body>
+</html>

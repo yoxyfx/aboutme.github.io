@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle Game</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden; /* 스크롤 방지 */
+            background-color: bisque;
+        }
+        #container {
+    position: absolute; /* 위치를 절대적으로 설정 */
+    top: 10%; /* 위에서부터 20% 만큼 아래로 위치 */
+    left: 50%; /* 화면의 중앙에 위치하도록 설정 */
+    transform: translateX(-50%); /* 수평 중앙 정렬 */
+    width: 750px;
+    height: 750px;
+    border: solid;
+    box-shadow: -10px 10px 5px gray;
+}
+
+        .piece {
+            width: 250px;
+            cursor: grab;
+            position: absolute;
+        }
+
+        img {
+            width: 250px;
+            height: auto;
+        }
+
+        .redirect-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 10px;
+            background-color: #f08080;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
+    <div id="container">
+        <!-- 드래그 가능한 이미지들 -->
+        <img src="img/Layer 1.png" class="piece" id="img1" draggable="true" data-x="0" data-y="0">
+        <img src="img/Layer 2.png" class="piece" id="img2" draggable="true" data-x="250" data-y="0">
+        <img src="img/Layer 3.png" class="piece" id="img3" draggable="true" data-x="500" data-y="0">
+        <img src="img/Layer 4.png" class="piece" id="img4" draggable="true" data-x="0" data-y="250">
+        <img src="img/Layer 5.png" class="piece" id="img5" draggable="true" data-x="250" data-y="250">
+        <img src="img/Layer 6.png" class="piece" id="img6" draggable="true" data-x="500" data-y="250">
+        <img src="img/Layer 7.png" class="piece" id="img7" draggable="true" data-x="0" data-y="500">
+        <img src="img/Layer 8.png" class="piece" id="img8" draggable="true" data-x="250" data-y="500">
+        <img src="img/Layer 9.png" class="piece" id="img9" draggable="true" data-x="500" data-y="500">
+    </div>
+
+    <script>
+const pieces = document.querySelectorAll('.piece');
+const container = document.getElementById('container');
+
+// 컨테이너 크기를 기준으로 랜덤 위치 계산
+function getRandomPosition(containerWidth, containerHeight, pieceWidth, pieceHeight, existingPositions) {
+    let x, y, overlap;
+
+    // 랜덤 위치가 기존 이미지들과 겹치지 않도록 반복
+    do {
+        overlap = false;
+        x = Math.floor(Math.random() * (containerWidth - pieceWidth));
+        y = Math.floor(Math.random() * (containerHeight - pieceHeight));
+
+        // 다른 이미지들과 겹치는지 확인
+        existingPositions.forEach(position => {
+            const distance = Math.sqrt(Math.pow(x - position.x, 2) + Math.pow(y - position.y, 2));
+            if (distance < pieceWidth) {
+                overlap = true; // 겹칠 경우 다시 시도
+            }
+        });
+    } while (overlap);
+
+    // 새 위치를 반환
+    return { x, y };
+}
+
+// 초기 랜덤 배치
+function setInitialPositions() {
+    const containerWidth = container.offsetWidth;
+    const containerHeight = container.offsetHeight;
+    let existingPositions = [];
+
+    pieces.forEach(piece => {
+        const pieceWidth = piece.offsetWidth;
+        const pieceHeight = piece.offsetHeight;
+
+        // 기존 위치들과 겹치지 않도록 새로운 위치 계산
+        const { x, y } = getRandomPosition(containerWidth, containerHeight, pieceWidth, pieceHeight, existingPositions);
+
+        // 이미지 위치 설정
+        piece.style.left = `${x}px`;
+        piece.style.top = `${y}px`;
+
+        // 해당 이미지의 위치를 기존 위치 목록에 추가
+        existingPositions.push({ x, y });
+    });
+}
+
+// 드래그 시작 시 처리
+function dragStart(event) {
+    event.dataTransfer.setData('text/plain', event.target.id);
+    const emptyCanvas = document.createElement('canvas');
+    emptyCanvas.width = 0;
+    emptyCanvas.height = 0;
+    event.dataTransfer.setDragImage(emptyCanvas, 0, 0);
+}
+
+// 드래그가 끝났을 때 처리
+function dragEnd(event) {
+    console.log('Drag ended');
+}
+
+// 컨테이너 위에서 드래그 허용
+function dragOver(event) {
+    event.preventDefault();
+}
+
+// 드롭 시 처리
+function drop(event) {
+    event.preventDefault();
+
+    const id = event.dataTransfer.getData('text/plain');
+    const draggedElement = document.getElementById(id);
+
+    const containerRect = container.getBoundingClientRect();
+    const offsetX = event.clientX - containerRect.left;
+    const offsetY = event.clientY - containerRect.top;
+
+    if (offsetX >= 0 && offsetY >= 0 && offsetX <= container.offsetWidth && offsetY <= container.offsetHeight) {
+        draggedElement.style.left = `${offsetX - draggedElement.offsetWidth / 2}px`;
+        draggedElement.style.top = `${offsetY - draggedElement.offsetHeight / 2}px`;
+    }
+}
+
+pieces.forEach(piece => {
+    piece.addEventListener('dragstart', dragStart);
+    piece.addEventListener('dragend', dragEnd);
+});
+
+container.addEventListener('dragover', dragOver);
+container.addEventListener('drop', drop);
+
+// 초기 랜덤 위치 설정
+setInitialPositions();
+
+
+    
+</script>
