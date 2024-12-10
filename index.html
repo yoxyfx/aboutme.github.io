@@ -15,7 +15,7 @@
 
         body {
             font-family: 'Special Elite', cursive; /* 빈티지 느낌의 글씨체 */
-            background-color: #d3c7b0; /* 따뜻한 빈티지 배경 */
+            background-color: #f4f1ea; /* 부드러운 파스텔 베이지 배경 */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -31,7 +31,7 @@
 
         h1 {
             margin-bottom: 20px;
-            color: #5c4a3e;
+            color: #4f3b2f; /* 따뜻한 다크 브라운 색상 */
             font-size: 3rem;
             text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
             animation: fadeIn 1s;
@@ -56,14 +56,13 @@
         .drawer {
             width: calc(33.33% - 30px); 
             height: 150px;
-            background: linear-gradient(145deg, #a08361, #c8a582);
+            background: linear-gradient(145deg, #d6bba7, #f3e0b5); /* 부드러운 파스텔 그라데이션 */
             border-radius: 15px;
             position: relative;
             cursor: pointer;
             transition: all 0.4s ease;
             box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3), 0 4px 15px rgba(0, 0, 0, 0.1);
-            border: 10px solid #785b42;
-           
+            border: 10px solid #c0a48c; /* 따뜻한 파스텔 브라운 색상 */
             animation: rise 1s ease forwards;
         }
 
@@ -99,7 +98,7 @@
         .drawer[data-stage="7"]:hover .drawer-handle,
         .drawer[data-stage="9"]:hover .drawer-handle {
             transform: translateX(20px);
-            background-color: #7a5b44;
+            background-color: #f0a14f;
             border:1px;
             border-radius: 15px; /* 둥근 모서리 */
         }
@@ -110,13 +109,13 @@
         .drawer[data-stage="6"]:hover .drawer-handle,
         .drawer[data-stage="8"]:hover .drawer-handle {
             transform: translateX(40px);
-            background-color: #6e513d;
+            background-color: #e0b29d;
             border:1px;
             border-radius: 15px; /* 직각 */
         }
 
         .drawer:hover {
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
 
         .drawer:nth-child(1) { animation-delay: 0.1s; }
