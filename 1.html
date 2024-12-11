@@ -131,7 +131,7 @@
   </div>
   <div class="controls">
     <button id="toggleButton">Pause</button>
-    <button id="toggleModeButton" class="toggle-mode">Switch to Light Mode</button>
+    <button id="toggleModeButton" class="toggle-mode">Switch to Mode 2</button>
   </div>
   
   <button class="redirect-button" onclick="window.location.href='index.html'">Go to Index</button>
@@ -272,12 +272,12 @@
         document.body.style.backgroundColor = 'rgb(239, 180, 180)';
         document.body.style.color = 'white';
         finalCircle.color = 'rgb(239, 180, 180)'; 
-        toggleModeButton.textContent = 'Switch to Light Mode';
+        toggleModeButton.textContent = 'Switch to Mode 2';
       } else {
         document.body.style.backgroundColor = 'lightblue';
         document.body.style.color = 'black';
         finalCircle.color = 'lightblue'; 
-        toggleModeButton.textContent = 'Switch to Dark Mode';
+        toggleModeButton.textContent = 'Switch to Mode 1';
       }
   
       canvas.style.backgroundColor = isDarkMode ? 'black' : 'white';
