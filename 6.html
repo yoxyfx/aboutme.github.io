@@ -8,7 +8,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: s#e6a4c8;
+            background-color: #bd7c9f;
             font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
@@ -154,8 +154,8 @@
         <div class="button-group">
             <button id="btn-black" data-bgcolor="#ffeeef" data-bordercolor="#f9c8d4" data-image="img-black">검정</button>
             <button id="btn-brown" data-bgcolor="#f1e0b7" data-bordercolor="#e0d7b5" data-image="img-brown">갈색</button>
-            <button id="btn-white" data-bgcolor="#ffffff" data-bordercolor="#f1f1f1" data-image="img-white">흰색</button>
-            <!-- 집 색깔을 변경하는 버튼 추가 -->
+            <button id="btn-white" data-bgcolor="#e0b5b5" data-bordercolor="#f1f1f1" data-image="img-white">흰색</button>
+
             <button id="btn-house-black" data-bgcolor="#f1e0e0" data-bordercolor="#e0b5b5">검정 집</button>
             <button id="btn-house-brown" data-bgcolor="#e6d0b9" data-bordercolor="#d6bfa7">갈색 집</button>
             <button id="btn-house-white" data-bgcolor="#f9f9f9" data-bordercolor="#d1d1d1">흰색 집</button>
@@ -183,16 +183,14 @@
             targetImage.style.display = 'block';
         }
 
-        // 버튼 클릭 시 이미지와 배경 색상 변경
         function changeBackgroundColor(color) {
             imageContainer.style.backgroundColor = color;
         }
 
-        // 집 배경 및 테두리 색상 변경
         function changeHouseBackgroundAndBorder(bgColor, borderColor) {
             dogHouse.style.backgroundColor = bgColor;
             dogHouse.style.borderColor = borderColor;
-            container.style.borderColor = borderColor; // 컨테이너 테두리 색상 변경
+            container.style.borderColor = borderColor; 
         }
 
         btnBlack.addEventListener('click', () => {
