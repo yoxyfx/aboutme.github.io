@@ -18,7 +18,6 @@
 
         .container {
             text-align: center;
-          /*  background: #ffffff;*/
             border: 10px solid #f9c8d4; 
             border-radius: 25px;
             padding: 40px;
@@ -53,31 +52,39 @@
 
         .button-group {
             display: flex;
-            justify-content: space-between; /* 버튼들을 양옆으로 배치 */
+            justify-content: space-between; 
             margin-top: 20px;
-            flex-wrap: wrap; /* 줄바꿈이 필요하면 줄바꿈 */
-            gap: 20px; /* 버튼 간 간격 */
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
         button {
             padding: 12px 25px;
-            background-color: #f9e2e8;
             border: 2px solid #f497a3;
             border-radius: 30px;
             cursor: pointer;
             font-size: 18px;
-            color: #a45a6a;
+            color: white;
             text-transform: uppercase;
             box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            flex: 1 1 calc(33.333% - 20px); /* 한 줄에 세 개씩 배치 */
+            flex: 1 1 calc(33.333% - 20px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         button:hover {
-            background-color: #a45a6a;
-            color: white;
             transform: scale(1.1);
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        button .circle {
+            width: 30px;
+            height: 30px;
+            background-color: rgb(195, 195, 195);
+            border-radius: 50%;
+            display: inline-block;
         }
 
         .redirect-button {
@@ -105,7 +112,6 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
-
         .dog-house {
             position: absolute;
             top: -110px;
@@ -116,9 +122,7 @@
             background: #f9e2e8;
             clip-path: polygon(50% 0%, 100% 50%, 100% 100%, 0% 100%, 0% 50%);
             border-radius: 10px;
-            /*border: 6px solid #f497a3;*/
             z-index: -1;
-            /*box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);*/
         }
 
         .dog-door {
@@ -132,7 +136,6 @@
             border-radius: 10px 10px 0 0;
             box-shadow: inset 0 -3px 5px rgba(0, 0, 0, 0.1);
         }
-
   
     </style>
 </head>
@@ -152,13 +155,19 @@
         </div>
 
         <div class="button-group">
-            <button id="btn-black" data-bgcolor="#ffeeef" data-bordercolor="#f9c8d4" data-image="img-black">검정</button>
-            <button id="btn-brown" data-bgcolor="#f1e0b7" data-bordercolor="#e0d7b5" data-image="img-brown">갈색</button>
-            <button id="btn-white" data-bgcolor="#e0b5b5" data-bordercolor="#f1f1f1" data-image="img-white">흰색</button>
+            <button id="btn-black" data-bgcolor="#000000" data-bordercolor="#f9c8d4" data-image="img-black" style="background-color: #000000;">
+                <div class="circle"></div>
+            </button>
+            <button id="btn-brown" data-bgcolor="#6a4f32" data-bordercolor="#e0d7b5" data-image="img-brown" style="background-color: #6a4f32;">
+                <div class="circle"></div>
+            </button>
+            <button id="btn-white" data-bgcolor="#ffffff" data-bordercolor="#f1f1f1" data-image="img-white" style="background-color: #ffffff;">
+                <div class="circle"></div>
+            </button>
 
-            <button id="btn-house-black" data-bgcolor="#f1e0e0" data-bordercolor="#e0b5b5">검정 집</button>
-            <button id="btn-house-brown" data-bgcolor="#e6d0b9" data-bordercolor="#d6bfa7">갈색 집</button>
-            <button id="btn-house-white" data-bgcolor="#f9f9f9" data-bordercolor="#d1d1d1">흰색 집</button>
+            <button id="btn-house-black" data-bgcolor="#f1e0e0" data-bordercolor="#e0b5b5" style="background-color: #000000;"></button>
+            <button id="btn-house-brown" data-bgcolor="#e6d0b9" data-bordercolor="#d6bfa7"style="background-color: #6a4f32;"></button>
+            <button id="btn-house-white" data-bgcolor="#f9f9f9" data-bordercolor="#d1d1d1" style="background-color: #ffffff;"></button>
         </div>
     </div>
 
@@ -208,7 +217,6 @@
             changeBackgroundColor(btnWhite.dataset.bgcolor);
         });
 
-        // 집 색상 변경 버튼
         btnHouseBlack.addEventListener('click', () => {
             changeHouseBackgroundAndBorder(btnHouseBlack.dataset.bgcolor, btnHouseBlack.dataset.bordercolor);
         });

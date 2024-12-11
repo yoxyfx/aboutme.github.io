@@ -27,6 +27,7 @@
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2); /* 입체적인 그림자 */
             border-radius: 30px;
             margin-top: 20px;
+            cursor: url('pen-cursor.png'), auto; /* 기본 팬 모양 커서 */
         }
         .controls {
             margin-top: 20px;
@@ -54,6 +55,10 @@
         #sizeSlider {
             width: 220px;
             margin-top: 10px;
+        }
+        #colorPicker {
+            display: none;
+            margin-top: 10px; /* 색상 선택기를 아래로 이동 */
         }
         .redirect-button {
             position: absolute;
@@ -88,7 +93,7 @@
     
     <div class="controls">
         <button id="colorBtn">색상변경</button> 
-        <input type="color" id="colorPicker" value="#000000" style="display: none;"> 
+        <input type="color" id="colorPicker" value="#000000"> 
         <button id="penBtn">팬 선택</button>
         <button id="eraserBtn">지우개 선택</button>
         <button id="clearBtn">캔버스 초기화</button>
@@ -148,10 +153,12 @@
 
             d.getElementById('penBtn').onclick = () => {
                 meta.tool = 'pen'; 
+                canvas.style.cursor = "url('pen-cursor.png'), auto";
             };
 
             d.getElementById('eraserBtn').onclick = () => {
                 meta.tool = 'eraser'; 
+                canvas.style.cursor = "url('eraser-cursor.png'), auto";
             };
 
             d.getElementById('sizeSlider').oninput = e => {
